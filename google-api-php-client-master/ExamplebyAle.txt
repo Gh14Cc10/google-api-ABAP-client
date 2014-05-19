@@ -1,0 +1,20 @@
+<?php
+  require_once 'Google/Client.php';
+  require_once 'Google/Service/Books.php';
+  $client = new Google_Client();
+  $client->setApplicationName("Client_Library_Examples");
+  $client->setDeveloperKey("YOUR_APP_KEY");
+  $service = new Google_Service_Mirror($client);
+  $results = $service->timeline->listTimeline();
+
+  foreach ($results as $item) {
+    //echo $item['volumeInfo']['title'], "<br /> \n";
+  }
+```
+
+
+Initial work:
+Config.php (full)
+Google/Client.php con i metodi constructor, setApplicationName e setDeveloperKey
+
+poi analizzare cosa serve nella classe Google_Service_Mirror.
