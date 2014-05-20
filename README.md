@@ -25,7 +25,6 @@ PHP sample code
   foreach ($results as $item) {
     //echo $item['volumeInfo']['title'], "<br /> \n";
   }
-```
 ?>
 
 -------------------
