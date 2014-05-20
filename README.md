@@ -5,9 +5,6 @@ Google APIs Client Library for ABAP.
 
 Starting with Google Glasses API.
 
-To contribute:
-Package -> ZGOOGLEAPIABAPCLIENT on GAR starts with the implementation of the config class
-
 
 -------------------
 PHP sample code
@@ -32,7 +29,7 @@ PHP sample code
 
   foreach ($results as $item) {
   
-    //echo $item['volumeInfo']['title'], "<br /> \n";
+    echo $item['volumeInfo']['title'], "<br /> \n";
     
   }
   
