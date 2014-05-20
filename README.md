@@ -1,7 +1,7 @@
 google-api-ABAP-client
 ======================
 
-Google APIs Client Library for ABAP.
+Google APIs Client Library for ABAP created as copy of the php Library.
 
 Starting with Google Glasses API.
 
@@ -42,13 +42,5 @@ ABAP sample code
 
 See report ZGOOGLE_TEST
 
---------------------------------------
-Next steps for collaborators:
---------------------------------------
 
-Config.php --> to terminate getters and setters
-
-Google/Service/Mirror.php (class Google_Service_Mirror) --> TODO
-
-Client --> to extend during the service class development
 
