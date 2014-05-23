@@ -5,6 +5,8 @@ Google APIs Client Library for ABAP created as copy of the php Library.
 
 Starting with Google Glasses API.
 
+The google-api-php-client-master is the folder with the php implementation to translate.
+
 
 -------------------
 HOT TO CONTRIBUTE
