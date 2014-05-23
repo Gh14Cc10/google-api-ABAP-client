@@ -1,29 +1,30 @@
 *&---------------------------------------------------------------------*
 *&  Include           ZGOOGLE_CONFIG
 *&---------------------------------------------------------------------*
-INCLUDE zgoogle_config.
+INCLUDE zgoogle_client.
 
 *---------------------------------------------------------------------*
 *       CLASS main DEFINITION
 *---------------------------------------------------------------------*
-CLASS google_client DEFINITION.
+CLASS google_service DEFINITION.
 
   PUBLIC SECTION.
-    CONSTANTS: libver TYPE string VALUE '1.0.5-beta',
-               user_agent_suffix TYPE string VALUE 'google-api-ABAP-client/'.
 
-    METHODS constructor.
+    DATA: version TYPE string,
+          servicepath TYPE string,
+          servicename TYPE string,
+          availablescopes TYPE string,
+          resource TYPE string.
 
-    METHODS setapplicationname IMPORTING VALUE(ip_value) TYPE string.
+    METHODS constructor IMPORTING VALUE(io_client) TYPE REF TO google_client.
 
-    METHODS setdeveloperkey IMPORTING VALUE(ip_value) TYPE string.
+    METHODS getclient RETURNING VALUE(ro_client) TYPE REF TO google_client.
 
   PROTECTED SECTION.
 
   PRIVATE SECTION.
 
-* @var Google_Config $config
-    DATA po_config TYPE REF TO google_config.
+    DATA po_client TYPE REF TO google_client.
 
 ENDCLASS.                    "main DEFINITION
 
@@ -31,20 +32,15 @@ ENDCLASS.                    "main DEFINITION
 *---------------------------------------------------------------------*
 *       CLASS main IMPLEMENTATION
 *---------------------------------------------------------------------*
-CLASS google_client IMPLEMENTATION.
+CLASS google_service IMPLEMENTATION.
 
   METHOD constructor.
-
-    CREATE OBJECT po_config.
-
-  ENDMETHOD.                    "set_data
-
-  METHOD setapplicationname.
-    po_config->setapplicationname( ip_value = ip_value ).
+    me->po_client = io_client.
   ENDMETHOD.
 
-  METHOD setdeveloperkey.
-    po_config->setdeveloperkey( ip_value = ip_value ).
+  METHOD getclient.
+    ro_client = me->po_client.
   ENDMETHOD.
+
 
 ENDCLASS.                    "main IMPLEMENTATION

@@ -2,8 +2,14 @@ Structure:
 
 ZGOOGLEAPIABAPCLIENT
 |
+->ZHTTP
+   |_includes (ZGOOGLE_REQUEST, ZGOOGLE_REST)
+|
+->ZSERVICE
+   |_includes (ZGOOGLE_MIRROR, ZGOOGLE_RESOURCE)
+|
 ->ZSRC
-|  |_includes (ZGOOGLE_CLIENT, ZGOOGLE_CONFIG, ZGOOGLE_TYPES)
+|  |_includes (ZGOOGLE_CLIENT, ZGOOGLE_CONFIG, ZGOOGLE_TYPES, ZGOOGLE_SERVICE)
 |
 ->ZGOOGLE_TEST
 
@@ -12,11 +18,12 @@ ZGOOGLEAPIABAPCLIENT
 Next steps for collaborators:
 --------------------------------------
 
-Create includes, Create report
-
 Config --> to terminate getters and setters
 
-Google/Service/Mirror (class Google_Service_Mirror) --> TODO
+Implement 
+$httpRequest = $this->client->getAuth()->sign(lo_http_request);
+and
+return $this->client->execute($httpRequest);
+in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.
 
-Client --> to extend during the service class development
-
+Implement the parameter management and the postbody management in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.

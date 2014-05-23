@@ -20,7 +20,7 @@ CLASS google_config DEFINITION.
 
     "Getters
     METHODS getclassconfig IMPORTING VALUE(ip_class) TYPE string
-                                     VALUE(ip_value) TYPE string
+                                     VALUE(ip_key) TYPE string
                            RETURNING VALUE(et_config) TYPE zgoogle_kcv_t.
 
     METHODS getcacheclass RETURNING VALUE(ep_value) TYPE string.
@@ -197,21 +197,61 @@ CLASS google_config IMPLEMENTATION.
 
   "Getters
   METHOD getclassconfig.
+
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+
+    LOOP AT me->configuration INTO ls_configuration.
+      IF ip_key IS INITIAL.
+        IF ls_configuration-vcategory = 'classes' AND ls_configuration-vclass = ip_class.
+          APPEND ls_configuration TO et_config.
+          CLEAR ls_configuration.
+        ENDIF.
+      ELSE.
+        IF ls_configuration-vcategory = 'classes' AND ls_configuration-vclass = ip_class
+                                                  AND ls_configuration-vkey = ip_key.
+          APPEND ls_configuration TO et_config.
+          CLEAR ls_configuration.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
   ENDMETHOD.
 
   METHOD getcacheclass.
+* Return the configured cache class.
+* @return string
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me->configuration INTO ls_configuration WITH KEY vkey = 'cache_class'.
+    MOVE ls_configuration-vvalue TO ep_value.
   ENDMETHOD.
 
   METHOD getauthclass.
+* Return the configured Auth class.
+* @return string
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me->configuration INTO ls_configuration WITH KEY vkey = 'auth_class'.
+    MOVE ls_configuration-vvalue TO ep_value.
   ENDMETHOD.
 
   METHOD getioclass.
+* Return the configured IO class.
+* @return string
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me->configuration INTO ls_configuration WITH KEY vkey = 'io_class'.
+    MOVE ls_configuration-vvalue TO ep_value.
   ENDMETHOD.
 
   METHOD getapplicationname.
+* @return string the name of the application
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me->configuration INTO ls_configuration WITH KEY vkey = 'application_name'.
+    MOVE ls_configuration-vvalue TO ep_value.
   ENDMETHOD.
 
   METHOD getbasepath.
+* @return string the base URL to use for API calls
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me->configuration INTO ls_configuration WITH KEY vkey = 'base_path'.
+    MOVE ls_configuration-vvalue TO ep_value.
   ENDMETHOD.
 
   "Setters
