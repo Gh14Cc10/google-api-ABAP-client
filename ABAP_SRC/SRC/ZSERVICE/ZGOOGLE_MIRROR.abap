@@ -1,96 +1,168 @@
-*&---------------------------------------------------------------------*
-*&  Include           ZGOOGLE_RESOURCE
-*&---------------------------------------------------------------------*
+INCLUDE zgoogle_resource.
 
-INCLUDE zgoogle_service.
-INCLUDE zgoogle_rest.
-INCLUDE zgoogle_request.
-
-CLASS google_service_resource DEFINITION.
+CLASS google_service_mirror_tl_rss DEFINITION INHERITING FROM google_service_resource.
 
   PUBLIC SECTION.
 
-    METHODS: constructor IMPORTING service TYPE REF TO google_service
-                                   servicename TYPE string
-                                   resourcename TYPE string
-                                   resource TYPE zgoogle_methods_t.
+    METHODS listtimeline EXPORTING VALUE(et_results) TYPE t_string.
 
-    METHODS: call IMPORTING name TYPE string
-                            arguments TYPE string
-                            expectedclass TYPE string.
+ENDCLASS.
+
+CLASS google_service_mirror_tl_rss IMPLEMENTATION.
+
+  METHOD listtimeline.
+    me->call( name = 'list'
+              arguments = ''
+              expectedclass = 'Google_Service_Mirror_TimelineListResponse').
+  ENDMETHOD.
+
+ENDCLASS.
+
+CLASS google_service_mirror DEFINITION INHERITING FROM google_service.
+
+  PUBLIC SECTION.
+
+* View your location.
+    CONSTANTS: glass_location TYPE string VALUE 'https://www.googleapis.com/auth/glass.location',
+* View and manage your Glass timeline.
+               glass_timeline TYPE string VALUE 'https://www.googleapis.com/auth/glass.timeline'.
+
+    DATA: accounts TYPE string,
+          contacts TYPE string,
+          locations TYPE string,
+          settings TYPE string,
+          subscriptions TYPE string,
+          timeline TYPE REF TO google_service_mirror_tl_rss,
+          timeline_attachments TYPE string.
+
+    METHODS constructor IMPORTING VALUE(io_client) TYPE REF TO google_client.
 
   PROTECTED SECTION.
 
   PRIVATE SECTION.
 
-    DATA: po_service TYPE REF TO google_service,
-          po_client TYPE REF TO google_client,
-          pv_servicename TYPE string,
-          pv_resourcename TYPE string,
-          pt_resource TYPE zgoogle_methods_t.
+ENDCLASS.
 
-ENDCLASS.                    "main DEFINITION
-
-CLASS google_service_resource IMPLEMENTATION.
+CLASS google_service_mirror IMPLEMENTATION.
 
   METHOD constructor.
-    me->po_service = service.
-    me->po_client = service->getclient( ).
-    me->pv_servicename = servicename.
-    me->pv_resourcename = resourcename.
-    me->pt_resource = resource.
-  ENDMETHOD.
+    super->constructor( io_client ).
+    me->servicepath = 'mirror/v1/'.
+    me->version = 'v1'.
+    me->servicename = 'mirror'.
 
-  METHOD call.
-    "TODO
     DATA ls_resource TYPE zgoogle_methods_s.
-    DATA lv_path TYPE string.
-    DATA lv_httpmethod TYPE string.
-    DATA lv_parameters TYPE string.
+    DATA lt_resource TYPE zgoogle_methods_t.
 
-    "MISSING postbody CONSTRUCTION
+    ls_resource-method = 'delete'.
+    ls_resource-path = 'timeline/{id}'.
+    ls_resource-httpmethod = 'DELETE'.
+    ls_resource-param = 'id'.
+    ls_resource-location = 'path'.
+    ls_resource-type = 'string'.
+    ls_resource-required = 'X'.
+    APPEND ls_resource TO lt_resource.
 
-    "MISSING PARAMETERS CONSTRUCTION
+    ls_resource-method = 'get'.
+    ls_resource-path = 'timeline/{id}'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'id'.
+    ls_resource-location = 'path'.
+    ls_resource-type = 'string'.
+    ls_resource-required = 'X'.
+    APPEND ls_resource TO lt_resource.
 
-    LOOP AT me->pt_resource INTO ls_resource WHERE method = name.
-      lv_path = ls_resource-path.
-      lv_httpmethod = ls_resource-httpmethod.
-      "ADD PARAM
-      "lv_parameters =...
-    ENDLOOP.
+    ls_resource-method = 'insert'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'POST'.
+    ls_resource-param = ''.
+    ls_resource-location = ''.
+    ls_resource-type = 'array'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
 
-    DATA lv_servicepath TYPE string.
-    lv_servicepath = me->po_service->servicepath.
+    ls_resource-method = 'list'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'orderBy'.
+    ls_resource-location = 'query'.
+    ls_resource-type = 'string'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = 'list'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'includeDeleted'.
+    ls_resource-location = 'query'.
+    ls_resource-type = 'boolean'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = 'list'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'maxResults'.
+    ls_resource-location = 'query'.
+    ls_resource-type = 'integer'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = 'list'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'pageToken'.
+    ls_resource-location = 'query'.
+    ls_resource-type = 'string'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = 'list'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'sourceItemId'.
+    ls_resource-location = 'query'.
+    ls_resource-type = 'string'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = 'list'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'pinnedOnly'.
+    ls_resource-location = 'query'.
+    ls_resource-type = 'boolean'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = 'list'.
+    ls_resource-path = 'timeline'.
+    ls_resource-httpmethod = 'GET'.
+    ls_resource-param = 'bundleId'.
+    ls_resource-location = 'query'.
+    ls_resource-type = 'string'.
+    ls_resource-required = ''.
+    APPEND ls_resource TO lt_resource.
 
-    DATA lv_url TYPE string.
-    lv_url = google_http_rest=>createrequesturi(
-                  servicepath = lv_servicepath
-                  respath = lv_path
-                  params = lv_parameters
-    ).
+    ls_resource-method = 'patch'.
+    ls_resource-path = 'timeline/{id}'.
+    ls_resource-httpmethod = 'PATCH'.
+    ls_resource-param = 'id'.
+    ls_resource-location = 'path'.
+    ls_resource-type = 'string'.
+    ls_resource-required = 'X'.
+    APPEND ls_resource TO lt_resource.
 
-    DATA lo_http_request TYPE REF TO google_http_request.
-    CREATE OBJECT lo_http_request
+    ls_resource-method = 'update'.
+    ls_resource-path = 'timeline/{id}'.
+    ls_resource-httpmethod = 'PUT'.
+    ls_resource-param = 'id'.
+    ls_resource-location = 'path'.
+    ls_resource-type = 'string'.
+    ls_resource-required = 'X'.
+    APPEND ls_resource TO lt_resource.
+
+    CREATE OBJECT timeline
       EXPORTING
-        url      = lv_url
-        method   = lv_httpmethod
-        headers  = ''
-        postbody = ''.
-
-    DATA lv_basepath TYPE string.
-    lv_basepath = me->po_client->getbasepath( ).
-    lo_http_request->setBaseComponent( ip_basepath = lv_basepath ).
-    lo_http_request->setExpectedClass( ip_expectedclass = expectedclass ).
-
-*    $httpRequest = $this->client->getAuth()->sign(lo_http_request);
-
-    IF me->po_client->shoulddefer( ) EQ 'X'.
-*      // If we are in batch or upload mode, return the raw request.
-*      return $httpRequest;
-    ENDIF.
-
-*    return $this->client->execute($httpRequest);
+        service      = me
+        servicename  = me->servicename
+        resourcename = 'timeline'
+        resource     = lt_resource.
 
   ENDMETHOD.
 
-ENDCLASS.                    "main IMPLEMENTATION
+ENDCLASS.
