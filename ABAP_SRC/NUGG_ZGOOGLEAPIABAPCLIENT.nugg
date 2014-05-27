@@ -240,7 +240,7 @@
 *       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
 *                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
-    DATA lv_string.
+    DATA lv_string TYPE string.
     lv_string = lo_desc-&gt;get_relative_name( ).
     CASE lv_string.
       WHEN zgoogle_auth_oauth2=&gt;pc_name.
@@ -344,6 +344,46 @@
 
   endmethod.</source>
   </method>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETCLASSCONFIG" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="7 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETCLASSCONFIG" SCONAME="IO_CLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="OBJECT" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETCLASSCONFIG" SCONAME="IP_KEY" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETCLASSCONFIG" SCONAME="IP_CLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETCLASSCONFIG" SCONAME="RT_VALUE" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_KCV_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_KCV_T"/>
+   <source>METHOD getclassconfig.
+
+    DATA lv_class TYPE string.
+    DATA lo_desc TYPE REF TO cl_abap_typedescr.
+
+    IF ip_class IS INITIAL.
+
+      cl_abap_typedescr=&gt;describe_by_object_ref(
+        EXPORTING
+          p_object_ref         =   io_class  &quot; Reference to described object
+        RECEIVING
+          p_descr_ref          =  lo_desc   &quot; Reference to description object
+*        EXCEPTIONS
+*          reference_is_initial = 1
+*          others               = 2
+      ).
+      IF sy-subrc &lt;&gt; 0.
+*       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+      ENDIF.
+
+      lv_class = lo_desc-&gt;get_relative_name( ).
+
+    ELSE.
+      lv_class = ip_class.
+
+    ENDIF.
+
+    rt_value = me-&gt;po_config-&gt;getclassconfig(
+               ip_class  = lv_class
+               ip_key    = ip_key
+           ).
+
+  ENDMETHOD.</source>
+  </method>
   <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SETAPPLICATIONNAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SETAPPLICATIONNAME" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <source>method SETAPPLICATIONNAME.
@@ -379,22 +419,35 @@
   <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
   <attribute CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="PC_NAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;ZGOOGLE_AUTH_OAUTH2&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="PO_CLIENT" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="OBJECT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="PO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" EXPOSURE="0" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
-   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT"/>
+   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
    <source>method CONSTRUCTOR.
     me-&gt;po_client = io_client.
   endmethod.</source>
   </method>
   <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
-   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="OBJECT"/>
-   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="RO_HTTP_REQUEST" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="OBJECT"/>
-   <source>method SIGN.
+   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
+   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="RO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
+   <source>METHOD sign.
 *TODO
-*    // add the developer key to the request before signing it
-*    if ($this-&gt;client-&gt;getClassConfig($this, &apos;developer_key&apos;)) {
+*    add the developer key to the request before signing it
+
+    DATA lt_result TYPE zgoogle_kcv_t.
+    DATA ls_result TYPE zgoogle_kcv_s.
+
+    lt_result = me-&gt;po_client-&gt;getclassconfig(
+       io_class = me
+       ip_key   = &apos;developer_key&apos;
+*       ip_class =
+   ).
+
+    READ TABLE lt_result INTO ls_result INDEX 1.
+    DATA lv_devkey TYPE string.
+
+    IF ls_result-vvalue EQ &apos;X&apos;.
 *      $request-&gt;setQueryParam(&apos;key&apos;, $this-&gt;client-&gt;getClassConfig($this, &apos;developer_key&apos;));
-*    }
+    ENDIF.
 *
 *    // Cannot sign the request without an OAuth access token.
 *    if (null == $this-&gt;token &amp;&amp; null == $this-&gt;assertionCredentials) {
@@ -418,7 +471,7 @@
 *      }
 
 
-  endmethod.</source>
+  ENDMETHOD.</source>
   </method>
  </CLAS>
  <CLAS CLSNAME="ZGOOGLE_CONFIG" VERSION="1" LANGU="E" DESCRIPT="google_config" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
