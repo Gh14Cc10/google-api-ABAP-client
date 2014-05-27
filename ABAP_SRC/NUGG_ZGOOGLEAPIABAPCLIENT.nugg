@@ -1,0 +1,1052 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nugget name="ZGOOGLEAPIABAPCLIENT">
+ <CLAS CLSNAME="ZGOOGLE_SERVICE_MIRROR" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="ACCOUNTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONTACTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="GLASS_LOCATION" VERSION="1" LANGU="E" DESCRIPT="View your location" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/glass.location&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="GLASS_TIMELINE" VERSION="1" LANGU="E" DESCRIPT="View and manage your Glass timeline" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/glass.timeline&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="LOCATIONS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SETTINGS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SUBSCRIPTIONS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="7 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_TL_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE_ATTACHMENTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR" REFCLSNAME="ZGOOGLE_SERVICE" VERSION="1" STATE="1"/>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
+   <source>method CONSTRUCTOR.
+
+    super-&gt;constructor( io_client ).
+    me-&gt;servicepath = &apos;mirror/v1/&apos;.
+    me-&gt;version = &apos;v1&apos;.
+    me-&gt;servicename = &apos;mirror&apos;.
+
+    DATA ls_resource TYPE zgoogle_methods_s.
+    DATA lt_resource TYPE zgoogle_methods_t.
+
+    ls_resource-method = &apos;delete&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;DELETE&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;get&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;insert&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;POST&apos;.
+    ls_resource-param = &apos;&apos;.
+    ls_resource-location = &apos;&apos;.
+    ls_resource-type = &apos;array&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;orderBy&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;includeDeleted&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;boolean&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;maxResults&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;integer&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;pageToken&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;sourceItemId&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;pinnedOnly&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;boolean&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;bundleId&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;patch&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;PATCH&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;update&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;PUT&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    CREATE OBJECT timeline
+      EXPORTING
+        service      = me
+        servicename  = me-&gt;servicename
+        resourcename = &apos;timeline&apos;
+        resource     = lt_resource.
+
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" STATE="1"/>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="LISTTIMELINE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="LISTTIMELINE" SCONAME="RT_RESULTS" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
+   <source>method LISTTIMELINE.
+
+    me-&gt;call( name = &apos;list&apos;
+              arguments = &apos;&apos;
+              expectedclass = &apos;Google_Service_Mirror_TimelineListResponse&apos;).
+
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_resource" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" EXPOSURE="0" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PO_SERVICE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service" EXPOSURE="0" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PT_RESOURCE" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_METHODS_T" EXPOSURE="0" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_METHODS_T" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PV_RESOURCENAME" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PV_SERVICENAME" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <method CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="NAME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="ARGUMENTS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="EXPECTEDCLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method CALL.
+
+    &quot;TODO
+    DATA ls_resource TYPE zgoogle_methods_s.
+    DATA lv_path TYPE string.
+    DATA lv_httpmethod TYPE string.
+    DATA lv_parameters TYPE string.
+
+    &quot;MISSING postbody CONSTRUCTION
+
+    &quot;MISSING PARAMETERS CONSTRUCTION
+
+    LOOP AT me-&gt;pt_resource INTO ls_resource WHERE method = name.
+      lv_path = ls_resource-path.
+      lv_httpmethod = ls_resource-httpmethod.
+      &quot;ADD PARAM
+      &quot;lv_parameters =...
+    ENDLOOP.
+
+    DATA lv_servicepath TYPE string.
+    lv_servicepath = me-&gt;po_service-&gt;servicepath.
+
+    DATA lv_url TYPE string.
+    lv_url = zgoogle_http_rest=&gt;createrequesturi(
+                  servicepath = lv_servicepath
+                  respath = lv_path
+                  params = lv_parameters
+    ).
+
+    DATA lo_http_request TYPE REF TO zgoogle_http_request.
+    CREATE OBJECT lo_http_request
+      EXPORTING
+        url      = lv_url
+        method   = lv_httpmethod
+        headers  = &apos;&apos;
+        postbody = &apos;&apos;.
+
+    DATA lv_basepath TYPE string.
+    lv_basepath = me-&gt;po_client-&gt;getbasepath( ).
+    lo_http_request-&gt;setbasecomponent( ip_basepath = lv_basepath ).
+    lo_http_request-&gt;setexpectedclass( ip_expectedclass = expectedclass ).
+
+    DATA lo_object TYPE REF TO object.
+    DATA lo_desc TYPE REF TO cl_abap_typedescr.
+    lo_object = me-&gt;po_client-&gt;getauth( ).
+    cl_abap_typedescr=&gt;describe_by_object_ref(
+      EXPORTING
+        p_object_ref         =   lo_object  &quot; Reference to described object
+      RECEIVING
+        p_descr_ref          =  lo_desc   &quot; Reference to description object
+*        EXCEPTIONS
+*          reference_is_initial = 1
+*          others               = 2
+    ).
+    IF sy-subrc &lt;&gt; 0.
+*       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ENDIF.
+    DATA lv_string.
+    lv_string = lo_desc-&gt;get_relative_name( ).
+    CASE lv_string.
+      WHEN zgoogle_auth_oauth2=&gt;pc_name.
+        DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
+        lo_auth ?= me-&gt;po_client-&gt;getauth( ).
+        lo_http_request ?= lo_auth-&gt;sign( lo_http_request ). &quot;--------&gt; TODO
+    ENDCASE.
+
+    IF me-&gt;po_client-&gt;shoulddefer( ) EQ &apos;X&apos;.
+*      // If we are in batch or upload mode, return the raw request.
+*      return $httpRequest;
+    ENDIF.
+
+*    return $this-&gt;client-&gt;execute($httpRequest); &quot;--------&gt; TODO
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="SERVICE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="SERVICENAME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="RESOURCENAME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="RESOURCE" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_METHODS_T" CMPTYPE="1" MTDTYPE="2" EDITORDER="4 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_METHODS_T"/>
+   <source>method CONSTRUCTOR.
+
+    me-&gt;po_service = service.
+    me-&gt;po_client = service-&gt;getclient( ).
+    me-&gt;pv_servicename = servicename.
+    me-&gt;pv_resourcename = resourcename.
+    me-&gt;pt_resource = resource.
+
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_SERVICE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZGOOGLE_SERVICE" CMPNAME="AVAILABLESCOPES" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE" CMPNAME="PO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" EXPOSURE="0" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE" CMPNAME="RESOURCE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE" CMPNAME="SERVICENAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE" CMPNAME="SERVICEPATH" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE" CMPNAME="VERSION" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <method CLSNAME="ZGOOGLE_SERVICE" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
+   <source>method CONSTRUCTOR.
+    me-&gt;po_client = io_client.
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_SERVICE" CMPNAME="GETCLIENT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE" CMPNAME="GETCLIENT" SCONAME="RO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
+   <source>method GETCLIENT.
+    ro_client = me-&gt;po_client.
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="LIBVER" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;1.0.0-beta&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PO_AUTH" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="OBJECT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PO_CONFIG" VERSION="1" LANGU="E" DESCRIPT="google_config" EXPOSURE="0" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_CONFIG" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PV_DEFEREXECUTION" VERSION="1" LANGU="E" DESCRIPT="Boolean" EXPOSURE="0" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="USER_AGENT_SUFFIX" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;google-api-ABAP-client/&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method CONSTRUCTOR.
+
+    CREATE OBJECT po_config.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETAUTH" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETAUTH" SCONAME="RP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="OBJECT"/>
+   <source>method GETAUTH.
+
+    DATA lv_name TYPE string.
+    IF me-&gt;po_auth IS INITIAL.
+      lv_name = me-&gt;po_config-&gt;getauthclass( ). &quot;google_auth_oauth2
+      CREATE OBJECT me-&gt;po_auth TYPE (lv_name) EXPORTING io_client = me.
+    ENDIF.
+    rp_value = me-&gt;po_auth.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETBASEPATH" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETBASEPATH" SCONAME="RP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GETBASEPATH.
+
+    rp_value = me-&gt;po_config-&gt;getbasepath( ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SETAPPLICATIONNAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SETAPPLICATIONNAME" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETAPPLICATIONNAME.
+
+    po_config-&gt;setapplicationname( ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SETDEVELOPERKEY" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SETDEVELOPERKEY" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETDEVELOPERKEY.
+
+    po_config-&gt;setdeveloperkey( ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SHOULDDEFER" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="SHOULDDEFER" SCONAME="RP_VALUE" VERSION="1" LANGU="E" DESCRIPT="Boolean" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL"/>
+   <source>method SHOULDDEFER.
+
+    rp_value = me-&gt;pv_deferexecution.
+
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_AUTH_OAUTH2" VERSION="1" LANGU="E" DESCRIPT="google_auth_oauth2" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="PC_NAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;ZGOOGLE_AUTH_OAUTH2&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="PO_CLIENT" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="OBJECT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT"/>
+   <source>method CONSTRUCTOR.
+    me-&gt;po_client = io_client.
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="OBJECT"/>
+   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="RO_HTTP_REQUEST" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="OBJECT"/>
+   <source>method SIGN.
+*TODO
+*    // add the developer key to the request before signing it
+*    if ($this-&gt;client-&gt;getClassConfig($this, &apos;developer_key&apos;)) {
+*      $request-&gt;setQueryParam(&apos;key&apos;, $this-&gt;client-&gt;getClassConfig($this, &apos;developer_key&apos;));
+*    }
+*
+*    // Cannot sign the request without an OAuth access token.
+*    if (null == $this-&gt;token &amp;&amp; null == $this-&gt;assertionCredentials) {
+*      return $request;
+*    }
+*
+*    // Check if the token is set to expire in the next 30 seconds
+*    // (or has already expired).
+*    if ($this-&gt;isAccessTokenExpired()) {
+*      if ($this-&gt;assertionCredentials) {
+*        $this-&gt;refreshTokenWithAssertion();
+*      } else {
+*        if (! array_key_exists(&apos;refresh_token&apos;, $this-&gt;token)) {
+*            throw new Google_Auth_Exception(
+*                &quot;The OAuth 2.0 access token has expired,&quot;
+*                .&quot; and a refresh token is not available. Refresh tokens&quot;
+*                .&quot; are not returned for responses that were auto-approved.&quot;
+*            );
+*        }
+*        $this-&gt;refreshToken($this-&gt;token[&apos;refresh_token&apos;]);
+*      }
+
+
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_CONFIG" VERSION="1" LANGU="E" DESCRIPT="google_config" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <typeUsage CLSNAME="ZGOOGLE_CONFIG" TYPEGROUP="ABAP" VERSION="1" TPUTYPE="0" IMPLICIT="X"/>
+  <forwardDeclaration>ABAP</forwardDeclaration>
+  <attribute CLSNAME="ZGOOGLE_CONFIG" CMPNAME="CONFIGURATION" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_KCV_T" EXPOSURE="0" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_KCV_T" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GZIP_DISABLED" VERSION="1" LANGU="E" DESCRIPT="Boolean" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="ABAP_TRUE" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GZIP_ENABLED" VERSION="1" LANGU="E" DESCRIPT="Boolean" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="ABAP_FALSE" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GZIP_UPLOADS_ENABLED" VERSION="1" LANGU="E" DESCRIPT="Boolean" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="ABAP_TRUE" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CONFIG" CMPNAME="USE_AUTO_IO_SELECTION" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="&apos;auto&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CONFIG" CMPNAME="ZIP_UPLOADS_DISABLED" VERSION="1" LANGU="E" DESCRIPT="Boolean" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="ABAP_FALSE" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method CONSTRUCTOR.
+
+    DATA ls_configuration   TYPE zgoogle_kcv_s.
+
+*   The application_name is included in the User-Agent HTTP header.
+    ls_configuration-vkey = &apos;application_name&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+*   Which Authentication, Storage and HTTP IO classes to use.
+    ls_configuration-vkey = &apos;auth_class&apos;.
+    ls_configuration-vvalue = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+    ls_configuration-vkey = &apos;io_class&apos;.
+    ls_configuration-vvalue = me-&gt;use_auto_io_selection.
+    APPEND ls_configuration TO me-&gt;configuration.
+    ls_configuration-vkey = &apos;cache_class&apos;.
+    ls_configuration-vvalue = &apos;google_cache_file&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+*   Don&apos;t change these unless you&apos;re working against a special development
+*   or testing environment.
+    ls_configuration-vkey = &apos;base_path&apos;.
+    ls_configuration-vvalue = &apos;https://www.googleapis.com&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+*   Definition of class specific values, like file paths and so on.
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;google_io_abstract&apos;.
+    ls_configuration-vkey = &apos;request_timeout_seconds&apos;.
+    ls_configuration-vvalue = &apos;100&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+*   Disable the use of gzip on calls if set to true. Defaults to false.
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;google_http_request&apos;.
+    ls_configuration-vkey = &apos;disable_gzip&apos;.
+    ls_configuration-vvalue = me-&gt;gzip_enabled.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+*   We default gzip to disabled on uploads even if gzip is otherwise
+*   enabled, due to some issues seen with small packet sizes for uploads.
+*   Please test with this option before enabling gzip for uploads in
+*   a production environment.
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;google_http_request&apos;.
+    ls_configuration-vkey = &apos;enable_gzip_for_uploads&apos;.
+    ls_configuration-vvalue = me-&gt;zip_uploads_disabled.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+
+*   If you want to pass in OAuth 2.0 settings, they will need to be
+*   structured like this.
+
+*   Keys for OAuth 2.0 access, see the API console at
+*   https://developers.google.com/console
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;client_id&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;client_secret&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;redirect_uri&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+*   Simple API access key, also from the API console. Ensure you get
+*   a Server key, and not a Browser key.
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;developer_key&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+*   Other parameters.
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;access_type&apos;.
+    ls_configuration-vvalue = &apos;online&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;approval_prompt&apos;.
+    ls_configuration-vvalue = &apos;auto&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;request_visible_actions&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;ZGOOGLE_AUTH_OAUTH2&apos;.
+    ls_configuration-vkey = &apos;federated_signon_certs_url&apos;.
+    ls_configuration-vvalue = &apos;https://www.googleapis.com/oauth2/v1/certs&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+    ls_configuration-vcategory = &apos;classes&apos;.
+    ls_configuration-vclass = &apos;google_cache_file&apos;.
+    ls_configuration-vkey = &apos;directory&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+
+*   Definition of service specific values like scopes, oauth token URLs,
+*   etc. Example:
+    ls_configuration-vcategory = &apos;services&apos;.
+    ls_configuration-vvalue = &apos;&apos;.
+    APPEND ls_configuration TO me-&gt;configuration.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETAPPLICATIONNAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETAPPLICATIONNAME" SCONAME="EP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GETAPPLICATIONNAME.
+
+* @return string the name of the application
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration INTO ls_configuration WITH KEY vkey = &apos;application_name&apos;.
+    MOVE ls_configuration-vvalue TO ep_value.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETAUTHCLASS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETAUTHCLASS" SCONAME="EP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GETAUTHCLASS.
+
+* Return the configured Auth class.
+* @return string
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration INTO ls_configuration WITH KEY vkey = &apos;auth_class&apos;.
+    MOVE ls_configuration-vvalue TO ep_value.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETBASEPATH" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="7 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETBASEPATH" SCONAME="EP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GETBASEPATH.
+
+* @return string the base URL to use for API calls
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration INTO ls_configuration WITH KEY vkey = &apos;base_path&apos;.
+    MOVE ls_configuration-vvalue TO ep_value.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETCACHECLASS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETCACHECLASS" SCONAME="EP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GETCACHECLASS.
+
+* Return the configured cache class.
+* @return string
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration INTO ls_configuration WITH KEY vkey = &apos;cache_class&apos;.
+    MOVE ls_configuration-vvalue TO ep_value.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETCLASSCONFIG" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETCLASSCONFIG" SCONAME="IP_CLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETCLASSCONFIG" SCONAME="IP_KEY" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETCLASSCONFIG" SCONAME="ET_CONFIG" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_KCV_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_KCV_T"/>
+   <source>method GETCLASSCONFIG.
+
+    DATA: ls_configuration TYPE zgoogle_kcv_s.
+
+    LOOP AT me-&gt;configuration INTO ls_configuration.
+      IF ip_key IS INITIAL.
+        IF ls_configuration-vcategory = &apos;classes&apos; AND ls_configuration-vclass = ip_class.
+          APPEND ls_configuration TO et_config.
+          CLEAR ls_configuration.
+        ENDIF.
+      ELSE.
+        IF ls_configuration-vcategory = &apos;classes&apos; AND ls_configuration-vclass = ip_class
+                                                  AND ls_configuration-vkey = ip_key.
+          APPEND ls_configuration TO et_config.
+          CLEAR ls_configuration.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETIOCLASS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="GETIOCLASS" SCONAME="EP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GETIOCLASS.
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETACCESSTYPE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="16 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETACCESSTYPE" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETACCESSTYPE.
+
+* Set the the access type requested (offline or online.)
+* @param $access string - the access type
+    me-&gt;setauthconfig( ip_key = &apos;access_type&apos; ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAPPLICATIONNAME" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="12 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAPPLICATIONNAME" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETAPPLICATIONNAME.
+
+* Set the application name, this is included in the User-Agent HTTP header.
+* @param string $name
+
+    DATA: ls_configuration TYPE zgoogle_kcv_s,
+          lv_prev          TYPE string.
+
+    FIELD-SYMBOLS: &lt;fs_configuration&gt; TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration ASSIGNING &lt;fs_configuration&gt; WITH KEY vkey = &apos;application_name&apos;.
+    IF sy-subrc = 0.
+      &lt;fs_configuration&gt;-vvalue = ip_value.
+    ENDIF.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAPPROVALPROMPT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="17 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAPPROVALPROMPT" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETAPPROVALPROMPT.
+
+* Set when to show the approval prompt (auto or force)
+* @param $approval string - the approval request
+    me-&gt;setauthconfig( ip_key = &apos;approval_prompt&apos; ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAUTHCLASS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAUTHCLASS" SCONAME="IP_CLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETAUTHCLASS.
+
+* Set the auth class.
+* @param $class the class name to set
+
+    DATA: ls_configuration TYPE zgoogle_kcv_s,
+          lv_prev          TYPE string.
+
+    FIELD-SYMBOLS: &lt;fs_configuration&gt; TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration ASSIGNING &lt;fs_configuration&gt; WITH KEY vkey = &apos;auth_class&apos;.
+    IF sy-subrc = 0.
+      lv_prev = &lt;fs_configuration&gt;-vvalue.
+      &lt;fs_configuration&gt;-vvalue = ip_class.
+
+      READ TABLE me-&gt;configuration TRANSPORTING NO FIELDS WITH KEY vcategory = &apos;classes&apos; vclass = ip_class.
+      IF sy-subrc NE 0.
+        LOOP AT me-&gt;configuration ASSIGNING &lt;fs_configuration&gt;.
+          IF &lt;fs_configuration&gt;-vcategory = &apos;classes&apos; AND &lt;fs_configuration&gt;-vclass = lv_prev.
+            &lt;fs_configuration&gt;-vclass = ip_class.
+          ENDIF.
+        ENDLOOP.
+      ENDIF.
+
+    ENDIF.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAUTHCONFIG" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="19 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAUTHCONFIG" SCONAME="IP_KEY" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETAUTHCONFIG" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>METHOD setauthconfig.
+
+    DATA: lv_class TYPE string.
+
+    FIELD-SYMBOLS: &lt;fs_configuration&gt; TYPE zgoogle_kcv_s.
+
+    lv_class = me-&gt;getauthclass( ).
+    IF lv_class IS NOT INITIAL.
+      READ TABLE me-&gt;configuration ASSIGNING &lt;fs_configuration&gt; WITH KEY vcategory = &apos;classes&apos;
+                                                                         vclass    = lv_class
+                                                                         vkey      = ip_key.
+      IF sy-subrc = 0.
+        &lt;fs_configuration&gt;-vvalue = ip_value.
+      ENDIF.
+    ENDIF.
+
+  ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCACHECLASS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="11 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCACHECLASS" SCONAME="IP_CLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETCACHECLASS.
+
+* Set the IO class.
+* @param $class the class name to set
+
+    DATA: ls_configuration TYPE zgoogle_kcv_s,
+          lv_prev          TYPE string.
+
+    FIELD-SYMBOLS: &lt;fs_configuration&gt; TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration ASSIGNING &lt;fs_configuration&gt; WITH KEY vkey = &apos;cache_class&apos;.
+    IF sy-subrc = 0.
+      lv_prev = &lt;fs_configuration&gt;-vvalue.
+      &lt;fs_configuration&gt;-vvalue = ip_class.
+
+      READ TABLE me-&gt;configuration TRANSPORTING NO FIELDS WITH KEY vcategory = &apos;classes&apos; vclass = ip_class.
+      IF sy-subrc NE 0.
+        LOOP AT me-&gt;configuration ASSIGNING &lt;fs_configuration&gt;.
+          IF &lt;fs_configuration&gt;-vcategory = &apos;classes&apos; AND &lt;fs_configuration&gt;-vclass = lv_prev.
+            &lt;fs_configuration&gt;-vclass = ip_class.
+          ENDIF.
+        ENDLOOP.
+      ENDIF.
+
+    ENDIF.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCLASSCONFIG" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="8 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCLASSCONFIG" SCONAME="IP_CLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCLASSCONFIG" SCONAME="IT_CONFIG" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_KCV_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_KCV_T"/>
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCLASSCONFIG" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETCLASSCONFIG.
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCLIENTID" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="13 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETCLIENTID" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETCLIENTID.
+
+* Set the client ID for the auth class.
+* @param $key string - the API console client ID
+    me-&gt;setauthconfig( ip_key = &apos;client_id&apos; ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETDEVELOPERKEY" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="18 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETDEVELOPERKEY" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETDEVELOPERKEY.
+
+* Set the developer key for the auth class. Note that this is separate value
+* from the client ID - if it looks like a URL, its a client ID!
+* @param $key string - the API console developer key
+    me-&gt;setauthconfig( ip_key = &apos;developer_key&apos; ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETIOCLASS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="10 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETIOCLASS" SCONAME="IP_CLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETIOCLASS.
+
+* Set the IO class.
+* @param $class the class name to set
+    DATA: ls_configuration TYPE zgoogle_kcv_s,
+         lv_prev          TYPE string.
+
+    FIELD-SYMBOLS: &lt;fs_configuration&gt; TYPE zgoogle_kcv_s.
+    READ TABLE me-&gt;configuration ASSIGNING &lt;fs_configuration&gt; WITH KEY vkey = &apos;io_class&apos;.
+    IF sy-subrc = 0.
+      lv_prev = &lt;fs_configuration&gt;-vvalue.
+      &lt;fs_configuration&gt;-vvalue = ip_class.
+
+      READ TABLE me-&gt;configuration TRANSPORTING NO FIELDS WITH KEY vcategory = &apos;classes&apos; vclass = ip_class.
+      IF sy-subrc NE 0.
+        LOOP AT me-&gt;configuration ASSIGNING &lt;fs_configuration&gt;.
+          IF &lt;fs_configuration&gt;-vcategory = &apos;classes&apos; AND &lt;fs_configuration&gt;-vclass = lv_prev.
+            &lt;fs_configuration&gt;-vclass = ip_class.
+          ENDIF.
+        ENDLOOP.
+      ENDIF.
+
+    ENDIF.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETREDIRECTURI" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="14 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETREDIRECTURI" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETREDIRECTURI.
+
+* Set the redirect uri for the auth class. Note that if using the
+* Javascript based sign in flow, this should be the string &apos;postmessage&apos;.
+* @param $key string - the URI that users should be redirected to
+    me-&gt;setauthconfig( ip_key = &apos;redirect_uri&apos; ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETREQUESTVISIBLEACTIONS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="15 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CONFIG" CMPNAME="SETREQUESTVISIBLEACTIONS" SCONAME="IP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETREQUESTVISIBLEACTIONS.
+
+* Set the app activities for the auth class.
+* @param $rva string a space separated list of app activity types
+    me-&gt;setauthconfig( ip_key = &apos;request_visible_actions&apos; ip_value = ip_value ).
+
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_ACCESSKEY" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="13 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_BASECOMPONENT" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_CANGZIP" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="8 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_EXPECTEDCLASS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="12 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_PATH" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_POSTBODY" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_QUERYPARAMS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_REQUESTHEADERS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_REQUESTMETHOD" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_RESPONSEBODY" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="11 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_RESPONSEHEADERS" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="10 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_RESPONSEHTTPCODE" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="9 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="PV_USERAGENT" VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" EDITORDER="7 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="CONSTRUCTOR" SCONAME="URL" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="CONSTRUCTOR" SCONAME="METHOD" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="CONSTRUCTOR" SCONAME="HEADERS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="CONSTRUCTOR" SCONAME="POSTBODY" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="4 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method CONSTRUCTOR.
+
+    me-&gt;seturl( url ).
+    me-&gt;setrequestmethod( method ).
+    me-&gt;setrequestheaders( headers ).
+    me-&gt;setpostbody( postbody ).
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETBASECOMPONENT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETBASECOMPONENT" SCONAME="IP_BASEPATH" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETBASECOMPONENT.
+
+    me-&gt;pv_basecomponent = ip_basepath.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETEXPECTEDCLASS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="7 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETEXPECTEDCLASS" SCONAME="IP_EXPECTEDCLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETEXPECTEDCLASS.
+
+    me-&gt;pv_expectedclass = ip_expectedclass.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETPOSTBODY" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETPOSTBODY" SCONAME="IP_POSTBODY" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETPOSTBODY.
+
+*    $this-&gt;postBody = $postBody;
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETREQUESTHEADERS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETREQUESTHEADERS" SCONAME="IP_HEADERS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETREQUESTHEADERS.
+
+*    $headers = Google_Utils::normalize($headers);
+*    if ($this-&gt;requestHeaders) {
+*      $headers = array_merge($this-&gt;requestHeaders, $headers);
+*    }
+*    $this-&gt;requestHeaders = $headers;
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETREQUESTMETHOD" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETREQUESTMETHOD" SCONAME="IP_METHOD" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETREQUESTMETHOD.
+
+    me-&gt;pv_requestmethod = ip_method.
+    TRANSLATE me-&gt;pv_requestmethod TO UPPER CASE.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETURL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETURL" SCONAME="IP_URL" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETURL.
+
+    DATA lv_url TYPE string.
+    lv_url = ip_url.
+    IF lv_url(4) NE &apos;http&apos;.
+*     Force the path become relative.
+      IF lv_url(1) NE &apos;/&apos;.
+        CONCATENATE &apos;/&apos; lv_url INTO lv_url.
+      ENDIF.
+    ENDIF.
+*    $parts = parse_url($url);
+*    if (isset($parts[&apos;host&apos;])) {
+*      $this-&gt;baseComponent = sprintf(
+*          &quot;%s%s%s&quot;,
+*          isset($parts[&apos;scheme&apos;]) ? $parts[&apos;scheme&apos;] . &quot;://&quot; : &apos;&apos;,
+*          isset($parts[&apos;host&apos;]) ? $parts[&apos;host&apos;] : &apos;&apos;,
+*          isset($parts[&apos;port&apos;]) ? &quot;:&quot; . $parts[&apos;port&apos;] : &apos;&apos;
+*      );
+*    }
+    me-&gt;pv_path = lv_url.
+*    $this-&gt;path = isset($parts[&apos;path&apos;]) ? $parts[&apos;path&apos;] : &apos;&apos;;
+*    $this-&gt;queryParams = array();
+*    if (isset($parts[&apos;query&apos;])) {
+*      $this-&gt;queryParams = $this-&gt;parseQuery($parts[&apos;query&apos;]);
+*    }
+
+  endmethod.</source>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_HTTP_REST" VERSION="1" LANGU="E" DESCRIPT="google_http_rest" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <method CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="CREATEREQUESTURI" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="1" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="CREATEREQUESTURI" SCONAME="SERVICEPATH" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="CREATEREQUESTURI" SCONAME="RESPATH" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="CREATEREQUESTURI" SCONAME="PARAMS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="CREATEREQUESTURI" SCONAME="RP_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>METHOD createrequesturi.
+
+    DATA lv_requesturl TYPE string.
+    CONCATENATE servicepath respath INTO lv_requesturl.
+*    $uriTemplateVars = array();
+*    $queryVars = array();
+*    foreach ($params as $paramName =&gt; $paramSpec) {
+*      if ($paramSpec[&apos;type&apos;] == &apos;boolean&apos;) {
+*        $paramSpec[&apos;value&apos;] = ($paramSpec[&apos;value&apos;]) ? &apos;true&apos; : &apos;false&apos;;
+*      }
+*      if ($paramSpec[&apos;location&apos;] == &apos;path&apos;) {
+*        $uriTemplateVars[$paramName] = $paramSpec[&apos;value&apos;];
+*      } else if ($paramSpec[&apos;location&apos;] == &apos;query&apos;) {
+*        if (isset($paramSpec[&apos;repeated&apos;]) &amp;&amp; is_array($paramSpec[&apos;value&apos;])) {
+*          foreach ($paramSpec[&apos;value&apos;] as $value) {
+*            $queryVars[] = $paramName . &apos;=&apos; . rawurlencode($value);
+*          }
+*        } else {
+*          $queryVars[] = $paramName . &apos;=&apos; . rawurlencode($paramSpec[&apos;value&apos;]);
+*        }
+*      }
+*    if (count($uriTemplateVars)) {
+*      $uriTemplateParser = new Google_Utils_URITemplate();
+*      $requestUrl = $uriTemplateParser-&gt;parse($requestUrl, $uriTemplateVars);
+*    }
+*
+*    if (count($queryVars)) {
+*      $requestUrl .= &apos;?&apos; . implode($queryVars, &apos;&amp;&apos;);
+*    }
+*
+    rp_value = lv_requesturl.
+
+  ENDMETHOD.</source>
+  </method>
+ </CLAS>
+ <DTEL ROLLNAME="ZGOOGLE_BOOL" DDLANGUAGE="E" ROUTPUTLEN="000000" HEADLEN="07" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DDTEXT="Boolean" REPTEXT="Boolean" SCRTEXT_S="Boolean" SCRTEXT_M="Boolean" SCRTEXT_L="Boolean" AUTHCLASS="00" DTELMASTER="E" DATATYPE="CHAR" LENG="000001" DECIMALS="000000" OUTPUTLEN="000001">
+  <tpara/>
+ </DTEL>
+ <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" RMAND="001" RLOAD="E" FIXPT="X" UCCHECK="X">
+  <textPool>
+   <language SPRAS="E">
+    <textElement ID="R" ENTRY="Program ZGOOGLE_TEST" LENGTH="20 "/>
+   </language>
+  </textPool>
+  <source>*&amp;---------------------------------------------------------------------*
+*&amp; Report  ZGOOGLE_TEST
+*&amp;
+*&amp;---------------------------------------------------------------------*
+*&amp;
+*&amp;
+*&amp;---------------------------------------------------------------------*
+
+REPORT zgoogle_test.
+
+DATA lo_client TYPE REF TO zgoogle_client.
+DATA lo_service TYPE REF TO zgoogle_service_mirror.
+DATA lt_results TYPE TABLE OF string. &quot;-&gt; TO IMPLEMENT
+DATA ls_results TYPE string. &quot;-&gt; TO IMPLEMENT
+
+START-OF-SELECTION.
+
+
+  CREATE OBJECT lo_client.
+
+  lo_client-&gt;setapplicationname( &apos;Client_Mirror_Examples&apos; ).
+  lo_client-&gt;setdeveloperkey( &apos;YOUR_APP_KEY&apos; ).
+
+CREATE OBJECT lo_service EXPORTING io_client = lo_client.
+lt_results = lo_service-&gt;timeline-&gt;listTimeline( ). &quot;-&gt; TO IMPLEMENT
+
+loop at lt_results into ls_results.
+endloop.</source>
+ </PROG>
+ <TABL TABNAME="ZGOOGLE_KCV_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="ZGOOGLE_KCV_S" AUTHCLASS="00" PROZPUFF="000" EXCLASS="0">
+  <dd09l AS4VERS="0000" SCHFELDANZ="000"/>
+  <dd03p TABNAME="ZGOOGLE_KCV_S" FIELDNAME="VCATEGORY" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_KCV_S" FIELDNAME="VCLASS" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_KCV_S" FIELDNAME="VKEY" DDLANGUAGE="E" POSITION="0003" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_KCV_S" FIELDNAME="VVALUE" DDLANGUAGE="E" POSITION="0004" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+ </TABL>
+ <TABL TABNAME="ZGOOGLE_METHODS_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_methods_s" AUTHCLASS="00" PROZPUFF="000" EXCLASS="0">
+  <dd09l AS4VERS="0000" SCHFELDANZ="000"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="METHOD" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="PATH" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="HTTPMETHOD" DDLANGUAGE="E" POSITION="0003" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="PARAM" DDLANGUAGE="E" POSITION="0004" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="LOCATION" DDLANGUAGE="E" POSITION="0005" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="TYPE" DDLANGUAGE="E" POSITION="0006" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="REQUIRED" DDLANGUAGE="E" POSITION="0007" ROLLNAME="ZGOOGLE_BOOL" ADMINFIELD="0" INTTYPE="C" INTLEN="000002" ROUTPUTLEN="000000" HEADLEN="07" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DTELMASTER="E" DATATYPE="CHAR" LENG="000001" OUTPUTLEN="000001" DECIMALS="000000" MASK="  CHARE" MASKLEN="0000" DDTEXT="Boolean" REPTEXT="Boolean" SCRTEXT_S="Boolean" SCRTEXT_M="Boolean" SCRTEXT_L="Boolean" DEPTH="00" COMPTYPE="E" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+ </TABL>
+ <TTYP TYPENAME="ZGOOGLE_STRING_T" DDLANGUAGE="E" DATATYPE="STRG" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" DDTEXT="String table" TYPELEN="000008" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_KCV_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_KCV_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" DDTEXT="ZGOOGLE_KCV_T" TYPELEN="000032" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_METHODS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_METHODS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" DDTEXT="ZGOOGLE_METHODS_T" TYPELEN="000052" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+</nugget>

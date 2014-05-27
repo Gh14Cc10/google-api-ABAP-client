@@ -12,20 +12,32 @@ The google-api-php-client-master is the folder with the php implementation to tr
 HOT TO CONTRIBUTE
 -------------------
 
-Structure:
+1) Use SAPLINK to import the nugget
+
+
+2) If you want redefine the structure:
 
 ZGOOGLEAPIABAPCLIENT
+->ZSRC
+|  |_(ZGOOGLE_CLIENT, ZGOOGLE_CONFIG, ZGOOGLE_SERVICE, Dictionary objects)
+|
+|->SUBPACKAGES*
+|
+->report ZGOOGLE_TEST
+
+*
+SUBPACKAGES:
+|
+->ZAUTH
+|
+->(ZOOGLE_AUTH_OAUTH2)
 |
 ->ZHTTP
-   |_includes (ZGOOGLE_REQUEST, ZGOOGLE_REST)
+   |_(ZGOOGLE_HTTP_REQUEST, ZGOOGLE_HTTP_REST)
 |
 ->ZSERVICE
-   |_includes (ZGOOGLE_MIRROR, ZGOOGLE_RESOURCE)
+   |_(ZGOOGLE_SERVICE_MIRROR, ZGOOGLE_SERVICE_MIRROR_TL_RSS, ZGOOGLE_SERVICE_RESOURCE)
 |
-->ZSRC
-|  |_includes (ZGOOGLE_CLIENT, ZGOOGLE_CONFIG, ZGOOGLE_TYPES, ZGOOGLE_SERVICE)
-|
-->ZGOOGLE_TEST
 
 
 --------------------------------------
@@ -38,7 +50,7 @@ Implement
 $httpRequest = $this->client->getAuth()->sign(lo_http_request);
 and
 return $this->client->execute($httpRequest);
-in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.
+in the class ZGOOGLE_SERVICE_RESOURCE, method call.
 
 Implement the parameter management and the postbody management in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.
 
