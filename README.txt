@@ -44,7 +44,7 @@ SUBPACKAGES:
 Next steps for collaborators:
 --------------------------------------
 
-Config --> to terminate getters and setters
+Implement method AUTHENTICATE in class ZGOOGLE_AUTH_OAUTH2
 
 Implement 
 $httpRequest = $this->client->getAuth()->sign(lo_http_request);
