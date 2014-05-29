@@ -1,5 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<nugget name="GOOGLE-API-ABAP-CLIENT">
+<nugget name="ZGOOGLEAPIABAPCLIENT">
+ <CLAS CLSNAME="ZGOOGLE_IO_GENERIC" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_IO_GENERIC" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <method CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
+   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="RO_HTTP_RESPONSE" VERSION="1" LANGU="E" DESCRIPT="HTTP Framework (iHTTP) HTTP Response" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="IF_HTTP_RESPONSE"/>
+   <source>METHOD makerequest.
+
+    DATA: client TYPE REF TO if_http_client.
+    DATA: request TYPE REF TO CL_HTTP_REQUEST, &quot;if_http_request
+    rc TYPE sy-subrc,
+    http_rc TYPE sy-subrc,
+    xml_xstring TYPE string.
+
+    DATA lv_url TYPE string.
+    lv_url = io_http_request-&gt;get_url( ).
+
+*    lv_url --&gt; to split to obtain the correct host url and the request uri
+
+    CALL METHOD cl_http_client=&gt;create
+      EXPORTING
+        host               = &apos;accounts.google.com&apos; &quot;host
+        scheme             = cl_http_client=&gt;schemetype_https
+        proxy_host         = &apos;squid.techedge.corp&apos;
+        proxy_service      = &apos;3128&apos;
+        ssl_id             = &apos;ANONYM&apos;
+*       SAP_USERNAME       =
+*       SAP_CLIENT         =
+      IMPORTING
+        client             = client
+      EXCEPTIONS
+        argument_not_found = 1
+        plugin_not_active  = 2
+        internal_error     = 3
+        OTHERS             = 4.
+    IF sy-subrc &lt;&gt; 0.
+* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+    ENDIF.
+
+
+    request ?= client-&gt;request.
+
+    &quot;method set
+    DATA lv_method TYPE string.
+    lv_method = io_http_request-&gt;getrequestmethod( ).
+
+    IF lv_method EQ &apos;GET&apos;.
+      CALL METHOD client-&gt;request-&gt;set_method(
+        if_http_request=&gt;co_request_method_get ).
+    ELSE.
+      CALL METHOD client-&gt;request-&gt;set_method(
+        if_http_request=&gt;co_request_method_post ).
+    ENDIF.
+
+* set protocol version
+    client-&gt;request-&gt;set_version(
+         if_http_request=&gt;co_protocol_version_1_1 ).
+
+* headers
+    client-&gt;request-&gt;set_header_field(
+   name = &apos;Host&apos;
+   value = &apos;accounts.google.com&apos;
+   ).
+
+    client-&gt;request-&gt;set_header_field(
+        name = &apos;Content-Type&apos;
+        value = &apos;application/x-www-form-urlencoded&apos;
+        ).
+
+
+    CALL METHOD cl_http_utility=&gt;if_http_utility~set_request_uri
+      EXPORTING
+        request = client-&gt;request
+        uri     = &apos;/o/oauth2/token&apos;.
+
+
+
+
+    &quot;requestbody set
+    DATA lt_postbody TYPE zgoogle_postbody_t.
+    DATA ls_postbody TYPE zgoogle_postbody_s.
+    DATA lv_str TYPE string.
+    DATA lv_get TYPE string.
+    lt_postbody = io_http_request-&gt;getpostbody( ).
+
+    IF lt_postbody IS NOT INITIAL.
+      LOOP AT lt_postbody INTO ls_postbody.
+*optional Request fields
+        lv_str = cl_http_utility=&gt;if_http_utility~escape_url( ls_postbody-value ).
+        CALL METHOD request-&gt;set_form_field
+          EXPORTING
+            name  = ls_postbody-key
+            value = lv_str.
+        IF sy-tabix NE 1.
+          CONCATENATE lv_get &apos;&amp;&apos; ls_postbody-key &apos;=&apos; lv_str INTO lv_get.
+        ELSE.
+          CONCATENATE lv_get ls_postbody-key &apos;=&apos; lv_str INTO lv_get.
+        ENDIF.
+      ENDLOOP.
+    ENDIF.
+
+    client-&gt;request-&gt;set_cdata( lv_get ).
+
+    &quot;requestheaders set
+    &quot;TODO
+
+    &quot;user agent set
+    &quot;TODO
+
+
+*    DATA lv_raw TYPE xstring.
+*    lv_raw = client-&gt;request-&gt;get_raw_message( ).
+*    DATA txt TYPE string.
+*    MOVE lv_raw TO txt.
+*    WRITE: / &apos;Request: &apos;, lv_raw.
+*    WRITE: / txt.
+
+    &quot;execute
+    CALL METHOD client-&gt;send
+      EXCEPTIONS
+        http_communication_failure = 1
+        http_invalid_state         = 2
+        http_processing_failed     = 3
+        http_invalid_timeout       = 4
+        OTHERS                     = 5.
+    IF sy-subrc &lt;&gt; 0.
+    ENDIF.
+
+    CALL METHOD client-&gt;receive
+      EXCEPTIONS
+        http_communication_failure = 1
+        http_invalid_state         = 2
+        http_processing_failed     = 3
+        OTHERS                     = 4.
+
+    rc = sy-subrc. &quot;error receive
+
+&quot;---&gt; this part should be done outside--------------------------------------------------------------------
+    IF rc = 0.
+**http status code
+      client-&gt;response-&gt;get_status( IMPORTING code = http_rc ).
+
+*      IF http_rc &lt;&gt; 200.
+*        &quot;&quot;&quot;KO
+*      ELSE. &quot;status 200 -&gt;&gt;OK
+      CLEAR: xml_xstring.
+      xml_xstring = client-&gt;response-&gt;get_cdata( ).
+
+*      ENDIF.
+    ENDIF.
+ &quot;--------------------------------------------------------------------
+
+* very important: close your connection
+    client-&gt;close( ).
+
+*    CALL FUNCTION &apos;SRTUTIL_HELPER_XML_SHOW&apos;
+*      EXPORTING
+*        xdoc = xml_xstring
+*        html = abap_false.
+
+    ro_http_response = client-&gt;response.
+
+
+
+  ENDMETHOD.</source>
+  </method>
+ </CLAS>
  <CLAS CLSNAME="ZGOOGLE_SERVICE_MIRROR" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE">
   <localImplementation>*&quot;* use this source file for the definition and implementation of
 *&quot;* local helper classes, interface definitions and type
@@ -315,6 +489,7 @@
   <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="LIBVER" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;1.0.0-beta&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PO_AUTH" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="OBJECT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PO_CONFIG" VERSION="1" LANGU="E" DESCRIPT="google_config" EXPOSURE="0" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_CONFIG" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PO_IO" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_IO_GENERIC" EXPOSURE="0" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_IO_GENERIC" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PT_SCOPES" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_HTTP_PARAM_T" EXPOSURE="0" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_SCOPES_T" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PV_AUTHENTICATED" VERSION="1" LANGU="E" DESCRIPT="Boolean" EXPOSURE="0" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_CLIENT" CMPNAME="PV_DEFEREXECUTION" VERSION="1" LANGU="E" DESCRIPT="Boolean" EXPOSURE="0" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
@@ -361,17 +536,21 @@
         lo_auth ?= lo_object.
     ENDCASE.
 
-    rs_auth = lo_auth-&gt;authenticate( ip_code ).
+    rs_auth = lo_auth-&gt;authenticate( ip_code ). &quot;---&gt; TO FINISH
 
 
   endmethod.</source>
   </method>
   <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
-   <source>method CONSTRUCTOR.
+   <source>METHOD constructor.
 
     CREATE OBJECT po_config.
 
-  endmethod.</source>
+    IF me-&gt;po_config-&gt;getioclass( ) = zgoogle_config=&gt;use_auto_io_selection.
+      me-&gt;po_config-&gt;setioclass(&apos;ZGOOGLE_IO_GENERIC&apos;).
+    ENDIF.
+
+  ENDMETHOD.</source>
   </method>
   <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="CREATEAUTHURL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="12 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="CREATEAUTHURL" SCONAME="RP_URL" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
@@ -499,6 +678,20 @@
                ip_class  = lv_class
                ip_key    = ip_key
            ).
+
+  ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETIO" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="16 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETIO" SCONAME="RO_IO" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_IO_GENERIC" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_IO_GENERIC"/>
+   <source>METHOD getio.
+
+    IF me-&gt;po_io IS INITIAL.
+      DATA lv_string TYPE string.
+      lv_string = me-&gt;po_config-&gt;getioclass( ).
+      CREATE OBJECT me-&gt;po_io TYPE (lv_string).
+    ENDIF.
+
+    ro_io = me-&gt;po_io.
 
   ENDMETHOD.</source>
   </method>
@@ -1049,6 +1242,30 @@
 
   ENDMETHOD.</source>
   </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="GETPOSTBODY" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="11 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="GETPOSTBODY" SCONAME="RT_POSTBODY" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_POSTBODY_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_POSTBODY_T"/>
+   <source>method GETPOSTBODY.
+
+    rt_postbody = me-&gt;pt_postbody.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="GETREQUESTMETHOD" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="12 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="GETREQUESTMETHOD" SCONAME="RV_VALUE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GETREQUESTMETHOD.
+
+    rv_value = me-&gt;pv_requestmethod.
+
+  endmethod.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="GET_URL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="10 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="GET_URL" SCONAME="RV_URL" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method GET_URL.
+
+    rv_url = me-&gt;pv_path.
+
+  endmethod.</source>
+  </method>
   <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETBASECOMPONENT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="SETBASECOMPONENT" SCONAME="IP_BASEPATH" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <source>method SETBASECOMPONENT.
@@ -1259,6 +1476,7 @@
     ls_body-value = ls_result-vvalue.
     APPEND ls_body TO lt_body.
 
+
     CREATE OBJECT lo_http_request
       EXPORTING
         url      = me-&gt;pc_oauth2_token_uri
@@ -1267,9 +1485,16 @@
         postbody = lt_body.    &quot; ZGOOGLE_POSTBODY_T
     lo_http_request-&gt;disablegzip( ).
 
-*    $response = $this-&gt;client-&gt;getIo()-&gt;makeRequest($request);
-*
-*    if ($response-&gt;getResponseHttpCode() == 200) {
+    DATA lo_response TYPE REF TO if_http_response.
+    lo_response =  me-&gt;po_client-&gt;getio( )-&gt;makerequest( lo_http_request ). &quot;---&gt; TO FINISH
+
+    DATA lv_code TYPE i.
+    lo_response-&gt;get_status(
+      IMPORTING
+        code   =  lv_code  &quot; HTTP status code
+*        reason =     &quot; HTTP status description
+    ).
+    IF lv_code EQ 200. &quot;------------------------------------------------&gt; TO FINISH
 *      $this-&gt;setAccessToken($response-&gt;getResponseBody());
 *      $this-&gt;token[&apos;created&apos;] = time();
 *      return $this-&gt;getAccessToken();
@@ -1285,8 +1510,8 @@
 *          ),
 *          $response-&gt;getResponseHttpCode()
 *      );
-*    }
 
+    ENDIF.
   ENDMETHOD.</source>
   </method>
   <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
@@ -1610,7 +1835,7 @@ START-OF-SELECTION.
 *
 
 *in this case we simulate manually
-  DATA lv_xchagetoken TYPE string VALUE &apos;4/J3FomR2-qOma0NQTiD_2nN8M1gO7.ApWzNMkSi6sXOl05ti8ZT3bH7xKHjAI&apos;. &quot;----------&gt; INSERT HERE YOUR EXCHANGE TOKEN
+  DATA lv_xchagetoken TYPE string VALUE &apos;4/AlCh-H-CHX1jByBgXT08syAcwoZV.QsCuMK-aZtceOl05ti8ZT3YPDqeRjAI&apos;. &quot;----------&gt; INSERT HERE YOUR EXCHANGE TOKEN
 
   IF lv_xchagetoken IS NOT INITIAL.
     lo_client-&gt;authenticate( lv_xchagetoken ). &quot;------&gt; TO TERMINATE
@@ -1641,16 +1866,6 @@ START-OF-SELECTION.
   <dd03p TABNAME="ZGOOGLE_HTTP_PARAM_S" FIELDNAME="VKEY" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
   <dd03p TABNAME="ZGOOGLE_HTTP_PARAM_S" FIELDNAME="VVALUE" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
  </TABL>
- <TABL TABNAME="ZGOOGLE_METHODS_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_methods_s" AUTHCLASS="00" PROZPUFF="000" EXCLASS="0">
-  <dd09l AS4VERS="0000" SCHFELDANZ="000"/>
-  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="METHOD" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
-  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="PATH" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
-  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="HTTPMETHOD" DDLANGUAGE="E" POSITION="0003" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
-  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="PARAM" DDLANGUAGE="E" POSITION="0004" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
-  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="LOCATION" DDLANGUAGE="E" POSITION="0005" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
-  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="TYPE" DDLANGUAGE="E" POSITION="0006" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
-  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="REQUIRED" DDLANGUAGE="E" POSITION="0007" ROLLNAME="ZGOOGLE_BOOL" ADMINFIELD="0" INTTYPE="C" INTLEN="000002" ROUTPUTLEN="000000" HEADLEN="07" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DTELMASTER="E" DATATYPE="CHAR" LENG="000001" OUTPUTLEN="000001" DECIMALS="000000" MASK="  CHARE" MASKLEN="0000" DDTEXT="Boolean" REPTEXT="Boolean" SCRTEXT_S="Boolean" SCRTEXT_M="Boolean" SCRTEXT_L="Boolean" DEPTH="00" COMPTYPE="E" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
- </TABL>
  <TABL TABNAME="ZGOOGLE_TOKEN_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="ZGOOGLE_KCV_S" AUTHCLASS="00" PROZPUFF="000" EXCLASS="0">
   <dd09l AS4VERS="0000" SCHFELDANZ="000"/>
   <dd03p TABNAME="ZGOOGLE_TOKEN_S" FIELDNAME="CREATED" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="T" INTLEN="000012" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="TIMS" LENG="000006" OUTPUTLEN="000000" DECIMALS="000000" MASK="  TIMS" MASKLEN="0000" SHLPORIGIN="T" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
@@ -1662,6 +1877,16 @@ START-OF-SELECTION.
   <dd09l AS4VERS="0000" SCHFELDANZ="000"/>
   <dd03p TABNAME="ZGOOGLE_POSTBODY_S" FIELDNAME="KEY" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
   <dd03p TABNAME="ZGOOGLE_POSTBODY_S" FIELDNAME="VALUE" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+ </TABL>
+ <TABL TABNAME="ZGOOGLE_METHODS_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_methods_s" AUTHCLASS="00" PROZPUFF="000" EXCLASS="0">
+  <dd09l AS4VERS="0000" SCHFELDANZ="000"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="METHOD" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="PATH" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="HTTPMETHOD" DDLANGUAGE="E" POSITION="0003" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="PARAM" DDLANGUAGE="E" POSITION="0004" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="LOCATION" DDLANGUAGE="E" POSITION="0005" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="TYPE" DDLANGUAGE="E" POSITION="0006" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_METHODS_S" FIELDNAME="REQUIRED" DDLANGUAGE="E" POSITION="0007" ROLLNAME="ZGOOGLE_BOOL" ADMINFIELD="0" INTTYPE="C" INTLEN="000002" ROUTPUTLEN="000000" HEADLEN="07" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DTELMASTER="E" DATATYPE="CHAR" LENG="000001" OUTPUTLEN="000001" DECIMALS="000000" MASK="  CHARE" MASKLEN="0000" DDTEXT="Boolean" REPTEXT="Boolean" SCRTEXT_S="Boolean" SCRTEXT_M="Boolean" SCRTEXT_L="Boolean" DEPTH="00" COMPTYPE="E" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
  </TABL>
  <TABL TABNAME="ZGOOGLE_SCOPES_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_scopes_s" AUTHCLASS="00" PROZPUFF="000" EXCLASS="0">
   <dd09l AS4VERS="0000" SCHFELDANZ="000"/>
