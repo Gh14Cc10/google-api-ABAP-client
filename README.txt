@@ -48,15 +48,11 @@ SUBPACKAGES:
 Next steps for collaborators:
 --------------------------------------
 
-Implement method AUTHENTICATE in class ZGOOGLE_AUTH_OAUTH2
-
-Implement 
-$httpRequest = $this->client->getAuth()->sign(lo_http_request);
-and
-return $this->client->execute($httpRequest);
-in the class ZGOOGLE_SERVICE_RESOURCE, method call.
-
 Implement the parameter management and the postbody management in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.
+
+Adjust the code
+
+Implement the insert method
 
 
 
