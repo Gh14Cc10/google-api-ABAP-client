@@ -9,7 +9,7 @@ The google-api-php-client-master is the folder with the php implementation to tr
 
 
 -------------------
-HOT TO CONTRIBUTE
+HOW TO CONTRIBUTE
 -------------------
 
 1) Use SAPLINK to import the nugget
