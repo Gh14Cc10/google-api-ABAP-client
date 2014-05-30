@@ -2611,7 +2611,8 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
 *&quot;* in the implementation part of the class</localMacros>
   <method CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
-   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="RO_HTTP_RESPONSE" VERSION="1" LANGU="E" DESCRIPT="HTTP Framework (iHTTP) HTTP Response" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="IF_HTTP_RESPONSE"/>
+   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="EO_HTTP_RESPONSE" VERSION="1" LANGU="E" DESCRIPT="HTTP Framework (iHTTP) HTTP Response" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="0" TYPTYPE="3" TYPE="IF_HTTP_RESPONSE"/>
+   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="EV_RESPONSESTR" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <source>METHOD makerequest.
 
     DATA: client TYPE REF TO if_http_client.
@@ -2623,11 +2624,26 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
     DATA lv_url TYPE string.
     lv_url = io_http_request-&gt;get_url( ).
 
+    data: lv_url2 type string.
+    data: lv_url3 type string.
+    data: len type i.
+    data: pos1 type i.
+    data: pos2 type i.
+    data: pos3 type i.
+
+    find first occurrence of &apos;//&apos; in lv_url match offset pos1.
+    find first occurrence of &apos;/o/&apos; in lv_url match offset pos2.
+    len = pos2 - pos1 - 2.
+    pos1 = pos1 + 2.
+    lv_url2 = lv_url+pos1(len).
+    len = strlen( lv_url ) - pos2.
+    lv_url3 = lv_url+pos2(len).
+
 *    lv_url --&gt; to split to obtain the correct host url and the request uri
 
     CALL METHOD cl_http_client=&gt;create
       EXPORTING
-        host               = &apos;accounts.google.com&apos; &quot;host
+        host               = lv_url2 &quot;host
         scheme             = cl_http_client=&gt;schemetype_https
         proxy_host         = &apos;squid.techedge.corp&apos;
         proxy_service      = &apos;3128&apos;
@@ -2668,7 +2684,7 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
 * headers
     client-&gt;request-&gt;set_header_field(
    name = &apos;Host&apos;
-   value = &apos;accounts.google.com&apos;
+   value = lv_url2
    ).
 
     client-&gt;request-&gt;set_header_field(
@@ -2680,8 +2696,13 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
     CALL METHOD cl_http_utility=&gt;if_http_utility~set_request_uri
       EXPORTING
         request = client-&gt;request
-        uri     = &apos;/o/oauth2/token&apos;.
+        uri     = lv_url3.
 
+    &quot;requestheaders set
+    &quot;TODO
+
+    &quot;user agent set
+    &quot;TODO
 
 
 
@@ -2710,20 +2731,6 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
 
     client-&gt;request-&gt;set_cdata( lv_get ).
 
-    &quot;requestheaders set
-    &quot;TODO
-
-    &quot;user agent set
-    &quot;TODO
-
-
-*    DATA lv_raw TYPE xstring.
-*    lv_raw = client-&gt;request-&gt;get_raw_message( ).
-*    DATA txt TYPE string.
-*    MOVE lv_raw TO txt.
-*    WRITE: / &apos;Request: &apos;, lv_raw.
-*    WRITE: / txt.
-
     &quot;execute
     CALL METHOD client-&gt;send
       EXCEPTIONS
@@ -2745,12 +2752,12 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
     rc = sy-subrc. &quot;error receive
 
     IF rc = 0.
-      ro_http_response = client-&gt;response.
+      eo_http_response = client-&gt;response.
+      ev_responsestr = client-&gt;response-&gt;get_cdata( ).
     ENDIF.
 
 * very important: close your connection
     client-&gt;close( ).
-
   ENDMETHOD.</source>
   </method>
  </CLAS>
@@ -4067,7 +4074,16 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
 
     DATA lo_response TYPE REF TO if_http_response.
     DATA xml_xstring TYPE string.
-    lo_response =  me-&gt;po_client-&gt;getio( )-&gt;makerequest( lo_http_request ). &quot;---&gt; TO FINISH
+
+    DATA lo_io TYPE REF TO zgoogle_io_generic.
+    lo_io = me-&gt;po_client-&gt;getio( ).
+    lo_io-&gt;makerequest(
+      EXPORTING
+        io_http_request  =   lo_http_request   &quot; google_http_request
+      IMPORTING
+        eo_http_response = lo_response    &quot; HTTP Framework (iHTTP) HTTP Response
+        ev_responsestr   = xml_xstring
+    ).
 
     DATA lv_code TYPE i.
     lo_response-&gt;get_status(
@@ -4075,52 +4091,13 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
         code   =  lv_code  &quot; HTTP status code
 *        reason =     &quot; HTTP status description
     ).
-    IF lv_code EQ 200. &quot;------------------------------------------------&gt; TO FINISH
-
-      CLEAR: xml_xstring.
-      xml_xstring = lo_response-&gt;get_cdata( ).
-
-*      $this-&gt;setAccessToken($response-&gt;getResponseBody());
-*      $this-&gt;token[&apos;created&apos;] = time();
-*      return $this-&gt;getAccessToken();
-    ELSE.
-*      $decodedResponse = json_decode($response-&gt;getResponseBody(), true);
-*      if ($decodedResponse != null &amp;&amp; $decodedResponse[&apos;error&apos;]) {
-*        $decodedResponse = $decodedResponse[&apos;error&apos;];
-*      }
-*      throw new Google_Auth_Exception(
-*          sprintf(
-*              &quot;Error fetching OAuth2 access token, message: &apos;%s&apos;&quot;,
-*              $decodedResponse
-*          ),
-*          $response-&gt;getResponseHttpCode()
-*      );
-
+    IF lv_code EQ 200.
+      me-&gt;setAccessToken( ip_json = xml_xstring ). &quot;---&gt; TO FINISH
+      me-&gt;ps_token-created = sy-uzeit.
+      rs_auth = me-&gt;ps_token.
     ENDIF.
 
-
-
-
-
-      &quot;JSON REFERENCE
-*    DATA lo_json TYPE ZCL_JSON_DOCUMENT.
-*  ZCL_JSON_DOCUMENT=&gt;create_with_json(
-*    EXPORTING
-*      json          =
-**      date_format   =
-**    RECEIVING
-**      json_document = lo_json    &quot; JSON Document
-*  ).
-*
-*WHILE json_doc-&gt;get_next( ) IS NOT INITIAL.
-*
-*   carrid = json_doc-&gt;get_value( &apos;carrid&apos; ).
-*   carrname = json_doc-&gt;get_value( &apos;carrname&apos; ).
-*
-*   WRITE:/ carrid, carrname.
-*
-*ENDWHILE.
-    ENDMETHOD.</source>
+  ENDMETHOD.</source>
   </method>
   <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="1" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
@@ -4284,47 +4261,63 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="REFRESHTOKENREQUEST" SCONAME="IP_CLIENT_SECRET" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="REFRESHTOKENREQUEST" SCONAME="IP_REFRESH_TOKEN" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="REFRESHTOKENREQUEST" SCONAME="IP_GRANT_TYPE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
-   <source>method REFRESHTOKENREQUEST.
+   <exception CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="REFRESHTOKENREQUEST" SCONAME="GOOGLE_AUTH_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Could not json decode the access token" MTDTYPE="0" EDITORDER="1 "/>
+   <source>METHOD refreshtokenrequest.
 
-    DATA lt_postbody type ZGOOGLE_POSTBODY_T.
-    DATA ls_postbody type ZGOOGLE_POSTBODY_s.
+    DATA lt_postbody      TYPE zgoogle_postbody_t.
+    DATA ls_postbody      TYPE zgoogle_postbody_s.
+    DATA lo_http_response TYPE REF TO if_http_response.
+    DATA lv_code          TYPE i.
+    DATA lv_body          TYPE string.
+    DATA lo_writer        TYPE REF TO cl_sxml_string_writer.
+    DATA lv_token         TYPE xstring.
 
     ls_postbody-key = &apos;client_id&apos;.
     ls_postbody-value = ip_client_id.
-    append ls_postbody to lt_postbody.
+    APPEND ls_postbody TO lt_postbody.
 
     ls_postbody-key = &apos;client_secret&apos;.
     ls_postbody-value = ip_client_id.
-    append ls_postbody to lt_postbody.
+    APPEND ls_postbody TO lt_postbody.
 
     ls_postbody-key = &apos;refresh_token&apos;.
     ls_postbody-value = ip_refresh_token.
-    append ls_postbody to lt_postbody.
+    APPEND ls_postbody TO lt_postbody.
 
     ls_postbody-key = &apos;grant_type&apos;.
     ls_postbody-value = ip_grant_type.
-    append ls_postbody to lt_postbody.
+    APPEND ls_postbody TO lt_postbody.
 
-    DATA lo_http_request type ref to ZGOOGLE_HTTP_REQUEST.
+    DATA lo_http_request TYPE REF TO zgoogle_http_request.
     CREATE OBJECT lo_http_request
       EXPORTING
-        url      = ZGOOGLE_AUTH_OAUTH2=&gt;PC_OAUTH2_TOKEN_URI
+        url      = zgoogle_auth_oauth2=&gt;pc_oauth2_token_uri
         method   = &apos;POST&apos;
         headers  = &apos;&apos;
-        postbody = lt_postbody
-      .
+        postbody = lt_postbody.
 
-     lo_http_request-&gt;disableGzip( ).
-*    $request = $this-&gt;client-&gt;getIo()-&gt;makeRequest($http);
+    lo_http_request-&gt;disablegzip( ).
+    me-&gt;po_client-&gt;getio( )-&gt;makerequest(
+      EXPORTING
+        io_http_request  = lo_http_request    &quot; google_http_request
+      IMPORTING
+        eo_http_response = lo_http_response    &quot; HTTP Framework (iHTTP) HTTP Response
+        ev_responsestr   = lv_body
+    ).
 *
-*    $code = $request-&gt;getResponseHttpCode();
-*    $body = $request-&gt;getResponseBody();
-*    if (200 == $code) {
-*      $token = json_decode($body, true);
-*      if ($token == null) {
+    lo_http_response-&gt;get_status( IMPORTING code = lv_code ).
+    IF lv_code EQ 200.
+      &quot;ABAP to JSON
+      lo_writer = cl_sxml_string_writer=&gt;create( type = if_sxml=&gt;co_xt_json ).
+      CALL TRANSFORMATION id  SOURCE text = lv_body
+                              RESULT XML lo_writer.
+      lv_token = lo_writer-&gt;get_output( ).
+
+*      $token = json_decode($body, true); TODO
+      IF lv_token IS INITIAL.
+        RAISE google_auth_exception.
 *        throw new Google_Auth_Exception(&quot;Could not json decode the access token&quot;);
-*      }
-*
+      ENDIF.
 *      if (! isset($token[&apos;access_token&apos;]) || ! isset($token[&apos;expires_in&apos;])) {
 *        throw new Google_Auth_Exception(&quot;Invalid token format&quot;);
 *      }
@@ -4332,9 +4325,35 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
 *      $this-&gt;token[&apos;access_token&apos;] = $token[&apos;access_token&apos;];
 *      $this-&gt;token[&apos;expires_in&apos;] = $token[&apos;expires_in&apos;];
 *      $this-&gt;token[&apos;created&apos;] = time();
-*    } else {
+    ELSE.
 *      throw new Google_Auth_Exception(&quot;Error refreshing the OAuth2 token, message: &apos;$body&apos;&quot;, $code);
 *    }
+    ENDIF.
+
+  ENDMETHOD.</source>
+  </method>
+  <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SETACCESSTOKEN" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SETACCESSTOKEN" SCONAME="IP_JSON" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method SETACCESSTOKEN.
+
+     &quot;JSON REFERENCE
+*    DATA lo_json TYPE ZCL_JSON_DOCUMENT.
+*  ZCL_JSON_DOCUMENT=&gt;create_with_json(
+*    EXPORTING
+*      json          =
+**      date_format   =
+**    RECEIVING
+**      json_document = lo_json    &quot; JSON Document
+*  ).
+*
+*WHILE json_doc-&gt;get_next( ) IS NOT INITIAL.
+*
+*   carrid = json_doc-&gt;get_value( &apos;carrid&apos; ).
+*   carrname = json_doc-&gt;get_value( &apos;carrname&apos; ).
+*
+*   WRITE:/ carrid, carrname.
+*
+*ENDWHILE.
 
   endmethod.</source>
   </method>
@@ -4443,7 +4462,7 @@ START-OF-SELECTION.
 *
 
 *in this case we simulate manually
-  DATA lv_xchagetoken TYPE string VALUE &apos;4/AlCh-H-CHX1jByBgXT08syAcwoZV.QsCuMK-aZtceOl05ti8ZT3YPDqeRjAI&apos;. &quot;----------&gt; INSERT HERE YOUR EXCHANGE TOKEN
+  DATA lv_xchagetoken TYPE string VALUE &apos;4/DAWJhfaR_PwsszJd2VltGXR2Cc0i.0k1rGBWlDYIXOl05ti8ZT3ZPoCCZjAI&apos;. &quot;----------&gt; INSERT HERE YOUR EXCHANGE TOKEN
 
   IF lv_xchagetoken IS NOT INITIAL.
     lo_client-&gt;authenticate( lv_xchagetoken ). &quot;------&gt; TO TERMINATE
