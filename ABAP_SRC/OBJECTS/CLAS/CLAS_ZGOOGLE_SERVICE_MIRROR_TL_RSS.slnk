@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CLAS CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE">
+ <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+ <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+ <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+ <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" STATE="1"/>
+ <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="LISTTIMELINE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+  <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="LISTTIMELINE" SCONAME="RT_RESULTS" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
+  <source>method LISTTIMELINE.
+
+    rt_results = me-&gt;call( name = &apos;list&apos;
+                arguments = &apos;&apos;
+                expectedclass = &apos;Google_Service_Mirror_TimelineListResponse&apos;).
+
+  endmethod.</source>
+ </method>
+</CLAS>

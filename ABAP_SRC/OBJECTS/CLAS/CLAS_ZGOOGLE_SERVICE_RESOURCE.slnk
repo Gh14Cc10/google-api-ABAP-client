@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CLAS CLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_resource" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
+ <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+ <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+ <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" EXPOSURE="0" STATE="1" EDITORDER="2 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PO_SERVICE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service" EXPOSURE="0" STATE="1" EDITORDER="1 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PT_RESOURCE" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_METHODS_T" EXPOSURE="0" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="ZGOOGLE_METHODS_T" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PV_RESOURCENAME" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="PV_SERVICENAME" VERSION="1" LANGU="E" EXPOSURE="0" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <method CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="NAME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="ARGUMENTS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="EXPECTEDCLASS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="ET_RETURN" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
+  <source>METHOD call.
+
+    &quot;TODO
+    DATA ls_resource TYPE zgoogle_methods_s.
+    DATA lv_path TYPE string.
+    DATA lv_httpmethod TYPE string.
+    DATA lv_parameters TYPE string.
+
+    &quot;MISSING postbody CONSTRUCTION
+
+    &quot;MISSING PARAMETERS CONSTRUCTION
+
+    LOOP AT me-&gt;pt_resource INTO ls_resource WHERE method = name.
+      lv_path = ls_resource-path.
+      lv_httpmethod = ls_resource-httpmethod.
+      &quot;ADD PARAM
+      &quot;lv_parameters =...
+    ENDLOOP.
+
+    DATA lv_servicepath TYPE string.
+    lv_servicepath = me-&gt;po_service-&gt;servicepath.
+
+    DATA lv_url TYPE string.
+    lv_url = zgoogle_http_rest=&gt;createrequesturi(
+                  servicepath = lv_servicepath
+                  respath = lv_path
+                  params = lv_parameters
+    ).
+
+    DATA lo_http_request TYPE REF TO zgoogle_http_request.
+    DATA lt_postbody TYPE zgoogle_postbody_t.
+    CREATE OBJECT lo_http_request
+      EXPORTING
+        url      = lv_url
+        method   = lv_httpmethod
+        postbody = lt_postbody.
+
+    DATA lv_basepath TYPE string.
+    lv_basepath = me-&gt;po_client-&gt;getbasepath( ).
+    lo_http_request-&gt;setbasecomponent( ip_basepath = lv_basepath ).
+    lo_http_request-&gt;setexpectedclass( ip_expectedclass = expectedclass ).
+
+    DATA lo_object TYPE REF TO object.
+    DATA lo_desc TYPE REF TO cl_abap_typedescr.
+    lo_object = me-&gt;po_client-&gt;getauth( ).
+    cl_abap_typedescr=&gt;describe_by_object_ref(
+      EXPORTING
+        p_object_ref         =   lo_object  &quot; Reference to described object
+      RECEIVING
+        p_descr_ref          =  lo_desc   &quot; Reference to description object
+*        EXCEPTIONS
+*          reference_is_initial = 1
+*          others               = 2
+    ).
+    IF sy-subrc &lt;&gt; 0.
+*       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ENDIF.
+    DATA lv_string TYPE string.
+    lv_string = lo_desc-&gt;get_relative_name( ).
+    CASE lv_string.
+      WHEN zgoogle_auth_oauth2=&gt;pc_name.
+        DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
+        lo_auth ?= me-&gt;po_client-&gt;getauth( ).
+        lo_http_request ?= lo_auth-&gt;sign( lo_http_request ). &quot;--------&gt; TODO (token refresh)
+    ENDCASE.
+
+    IF me-&gt;po_client-&gt;shoulddefer( ) EQ &apos;X&apos;.
+*      // If we are in batch or upload mode, return the raw request.
+*      return $httpRequest;
+    ENDIF.
+
+     et_return = me-&gt;po_client-&gt;execute( io_http_request = lo_http_request ).
+*    return $this-&gt;client-&gt;execute($httpRequest); &quot;--------&gt; TODO
+
+  ENDMETHOD.</source>
+ </method>
+ <method CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="SERVICE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE"/>
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="SERVICENAME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="RESOURCENAME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="2" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+  <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CONSTRUCTOR" SCONAME="RESOURCE" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_METHODS_T" CMPTYPE="1" MTDTYPE="2" EDITORDER="4 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_METHODS_T"/>
+  <source>method CONSTRUCTOR.
+
+    me-&gt;po_service = service.
+    me-&gt;po_client = service-&gt;getclient( ).
+    me-&gt;pv_servicename = servicename.
+    me-&gt;pv_resourcename = resourcename.
+    me-&gt;pt_resource = resource.
+
+  endmethod.</source>
+ </method>
+</CLAS>

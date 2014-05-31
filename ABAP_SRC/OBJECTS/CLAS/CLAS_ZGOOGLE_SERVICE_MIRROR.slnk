@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CLAS CLSNAME="ZGOOGLE_SERVICE_MIRROR" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" CLSCCINCL="X" FIXPT="X" UNICODE="X" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE">
+ <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+ <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+ <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="ACCOUNTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONTACTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="GLASS_LOCATION" VERSION="1" LANGU="E" DESCRIPT="View your location" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/glass.location&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="GLASS_TIMELINE" VERSION="1" LANGU="E" DESCRIPT="View and manage your Glass timeline" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/glass.timeline&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="LOCATIONS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SETTINGS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SUBSCRIPTIONS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="7 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_TL_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE_ATTACHMENTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+ <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR" REFCLSNAME="ZGOOGLE_SERVICE" VERSION="1" STATE="1"/>
+ <method CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="2" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+  <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
+  <source>method CONSTRUCTOR.
+
+    super-&gt;constructor( io_client ).
+    me-&gt;servicepath = &apos;mirror/v1/&apos;.
+    me-&gt;version = &apos;v1&apos;.
+    me-&gt;servicename = &apos;mirror&apos;.
+
+    DATA ls_resource TYPE zgoogle_methods_s.
+    DATA lt_resource TYPE zgoogle_methods_t.
+
+    ls_resource-method = &apos;delete&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;DELETE&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;get&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;insert&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;POST&apos;.
+    ls_resource-param = &apos;&apos;.
+    ls_resource-location = &apos;&apos;.
+    ls_resource-type = &apos;array&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;orderBy&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;includeDeleted&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;boolean&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;maxResults&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;integer&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;pageToken&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;sourceItemId&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;pinnedOnly&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;boolean&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;timeline&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;bundleId&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;patch&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;PATCH&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;update&apos;.
+    ls_resource-path = &apos;timeline/{id}&apos;.
+    ls_resource-httpmethod = &apos;PUT&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-type = &apos;string&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    CREATE OBJECT timeline
+      EXPORTING
+        service      = me
+        servicename  = me-&gt;servicename
+        resourcename = &apos;timeline&apos;
+        resource     = lt_resource.
+
+  endmethod.</source>
+ </method>
+</CLAS>

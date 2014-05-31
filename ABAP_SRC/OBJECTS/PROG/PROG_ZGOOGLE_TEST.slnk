@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" RMAND="001" RLOAD="E" FIXPT="X" UCCHECK="X">
+ <textPool>
+  <language SPRAS="E">
+   <textElement ID="R" ENTRY="Program ZGOOGLE_TEST" LENGTH="20 "/>
+  </language>
+ </textPool>
+ <source>*&amp;---------------------------------------------------------------------*
+*&amp; Report  ZGOOGLE_TEST
+*&amp;
+*&amp;---------------------------------------------------------------------*
+*&amp;
+*&amp;
+*&amp;---------------------------------------------------------------------*
+
+REPORT zgoogle_test.
+
+START-OF-SELECTION.
+
+  &quot;-------------------------------------------------------------------------------------------------
+
+  DATA lo_client TYPE REF TO zgoogle_client.
+  DATA lo_service TYPE REF TO zgoogle_service_mirror.
+  DATA lt_results TYPE TABLE OF string.
+  DATA ls_results TYPE string.
+
+  DATA lv_client_id TYPE string VALUE &apos;422143070437-51u1p3kaet97s88noehdvrmb4cbg3tb3.apps.googleusercontent.com&apos;.
+  DATA lv_client_secret TYPE string VALUE &apos;qyXSsqa4XdteFK9u4Xu-RZoT&apos;.
+  DATA lv_redirect_uri TYPE string VALUE &apos;urn:ietf:wg:oauth:2.0:oob&apos;.
+
+  CREATE OBJECT lo_client.
+
+  lo_client-&gt;setclientid( lv_client_id ).
+  lo_client-&gt;setclientsecret( lv_client_secret ).
+  lo_client-&gt;setredirecturi( lv_redirect_uri ).
+  lo_client-&gt;addscope( &apos;https://www.googleapis.com/auth/glass.timeline&apos; ).
+  lo_client-&gt;addscope(  &apos;https://www.googleapis.com/auth/userinfo.profile&apos; ).
+
+  CREATE OBJECT lo_service EXPORTING io_client = lo_client.
+
+
+  &quot;-----------------------------SIMULATION OF THE CALLBACKPAGE SECTION-----------------------------
+
+**callback page (will set the token)
+**
+**if (isset($_GET[&apos;code&apos;])) {
+**  $client-&gt;authenticate($_GET[&apos;code&apos;]);
+**}
+*
+
+*in this case we simulate manually
+  DATA lv_xchagetoken TYPE string VALUE &apos;4/eDjY0Rd-1jgWflgRuLDrD5T9MTvf.8usiPaQG9bEUOl05ti8ZT3YdWlCcjAI&apos;. &quot;----------&gt; INSERT HERE YOUR EXCHANGE TOKEN
+
+  IF lv_xchagetoken IS NOT INITIAL.
+    lo_client-&gt;authenticate( lv_xchagetoken ).
+  ENDIF.
+*-----------------------------------------------
+
+
+  IF lo_client-&gt;getaccesstoken( )-value IS NOT INITIAL.
+*AUTHENTICATED- call the service
+    lt_results = lo_service-&gt;timeline-&gt;listtimeline( ). &quot;-&gt; TO TERMINATE
+
+    LOOP AT lt_results INTO ls_results.
+      DATA lo_json TYPE REF TO zcl_json_document.
+      TYPES: BEGIN OF s_data,
+                items TYPE string,
+            END OF s_data.
+      DATA ls_data TYPE s_data.
+
+      zcl_json_document=&gt;create_with_json(
+        EXPORTING
+          json          = ls_results
+*          date_format   =
+        RECEIVING
+          json_document =  lo_json   &quot; JSON Document
+      ).
+      lo_json-&gt;get_data(
+*        EXPORTING
+*          json              =
+        IMPORTING
+          data              = ls_data
+      ).
+*        CATCH zcx_json_document.    &quot;
+
+      zcl_json_document=&gt;create_with_json(
+        EXPORTING
+          json          = ls_data-items
+*          date_format   =
+        RECEIVING
+          json_document =  lo_json   &quot; JSON Document
+      ).
+
+      DATA lt_strings TYPE zgoogle_string_t.
+      DATA ls_strings TYPE string.
+
+      lo_json-&gt;dumps(
+*        EXPORTING
+*          json           =
+*          current_intend =
+        IMPORTING
+          result         =  lt_strings   &quot; Table of Strings
+      ).
+
+      LOOP AT lt_strings INTO ls_strings.
+        WRITE: / ls_strings.
+      ENDLOOP.
+
+
+    ENDLOOP.
+  ELSE.
+*  if the token is not set, go to this link for the authentication:
+    DATA lv_url TYPE string.
+    lv_url = lo_client-&gt;createauthurl( ).
+    DATA lv_urlc TYPE c LENGTH 2200.
+    lv_urlc = lv_url.
+    CALL FUNCTION &apos;CALL_BROWSER&apos;
+      EXPORTING
+        url = lv_urlc.
+  ENDIF.</source>
+</PROG>
