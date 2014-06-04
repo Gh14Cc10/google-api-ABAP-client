@@ -19,7 +19,7 @@ HOW TO CONTRIBUTE
 
 ZGOOGLEAPIABAPCLIENT
 ->ZSRC
-|  |_(ZGOOGLE_CLIENT, ZGOOGLE_CONFIG, ZGOOGLE_SERVICE, Dictionary objects)
+|  |_(ZGOOGLE_CLIENT, ZGOOGLE_CONFIG, ZGOOGLE_SERVICE, Dictionary objects, Exception classes)
 |
 |->SUBPACKAGES*
 |
@@ -47,8 +47,6 @@ SUBPACKAGES:
 --------------------------------------
 Next steps for collaborators:
 --------------------------------------
-
-Check why the REFRESH TOKEN is not working
 
 Implement the parameter management and the postbody management in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.
 
