@@ -50,10 +50,7 @@ Next steps for collaborators:
 
 Implement the parameter management and the postbody management in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.
 
-Adjust the code
 
-Implement the insert method
-
-
+Implement a good user interface for the demo
 
 

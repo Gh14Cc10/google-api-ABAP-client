@@ -9,35 +9,37 @@
 *&quot;* components in the private section</localTypes>
   <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
+  <attribute CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="C_CTYPE_JSON" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;application/json&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="C_CTYPE_XWWWFORMURLENCODED" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;application/x-www-form-urlencoded&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " TYPESRC_LENG="0 "/>
   <method CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
-   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="EO_HTTP_RESPONSE" VERSION="1" LANGU="E" DESCRIPT="HTTP Framework (iHTTP) HTTP Response" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="0" TYPTYPE="3" TYPE="IF_HTTP_RESPONSE"/>
-   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="EV_RESPONSESTR" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="IP_CONTENT_TYPE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_string" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING"/>
+   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="EO_HTTP_RESPONSE" VERSION="1" LANGU="E" DESCRIPT="HTTP Framework (iHTTP) HTTP Response" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="0" TYPTYPE="3" TYPE="IF_HTTP_RESPONSE"/>
+   <parameter CLSNAME="ZGOOGLE_IO_GENERIC" CMPNAME="MAKEREQUEST" SCONAME="EV_RESPONSESTR" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="1" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <source>METHOD makerequest.
 
     DATA: client TYPE REF TO if_http_client.
     DATA: request TYPE REF TO cl_http_request, &quot;if_http_request
-    rc TYPE sy-subrc,
-    http_rc TYPE sy-subrc.
-
-
+          rc TYPE sy-subrc,
+          http_rc TYPE sy-subrc.
     DATA lv_url TYPE string.
     DATA lv_basepath TYPE string.
     DATA lv_geturl TYPE string.
+    DATA lv_method TYPE string.
+    DATA lv_lines TYPE i.
+    DATA lt_headers TYPE zgoogle_http_param_t.
+    DATA ls_headers TYPE zgoogle_http_param_s.
+    DATA lt_postbody TYPE zgoogle_postbody_t.
+    DATA ls_postbody TYPE zgoogle_postbody_s.
+    DATA lv_str TYPE string.
+    DATA lv_body TYPE string.
+
     lv_url = io_http_request-&gt;get_url( ).
     lv_basepath = io_http_request-&gt;getbasecomponent( ).
 
     &quot;method set
-    DATA lv_method TYPE string.
     lv_method = io_http_request-&gt;getrequestmethod( ).
-
-*    IF lv_method EQ &apos;GET&apos;.
-*      CONCATENATE lv_basepath lv_url INTO lv_geturl.
-*    ELSE.
     lv_geturl = lv_basepath.
-*    ENDIF.
-
-*    lv_url --&gt; to split to obtain the correct host url and the request uri
 
     CALL METHOD cl_http_client=&gt;create
       EXPORTING
@@ -60,7 +62,6 @@
 *            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
     ENDIF.
 
-
     request ?= client-&gt;request.
 
     IF lv_method EQ &apos;GET&apos;.
@@ -76,9 +77,10 @@
         if_http_request=&gt;co_request_method_post ).
 
       client-&gt;request-&gt;set_header_field(
-        name = &apos;Content-Type&apos;
-        value = &apos;application/x-www-form-urlencoded&apos;
-        ).
+      name = &apos;Content-Type&apos;
+      value = ip_content_type
+      ).
+
     ENDIF.
 
 * set protocol version
@@ -86,21 +88,17 @@
          if_http_request=&gt;co_protocol_version_1_1 ).
 
 * headers
+    client-&gt;request-&gt;set_header_field(
+      name = &apos;Host&apos;
+      value = lv_basepath
+      ).
 
-      client-&gt;request-&gt;set_header_field(
-        name = &apos;Host&apos;
-        value = lv_basepath
-        ).
-
-      CALL METHOD cl_http_utility=&gt;if_http_utility~set_request_uri
-        EXPORTING
-          request = client-&gt;request
-          uri     = lv_url.
+    CALL METHOD cl_http_utility=&gt;if_http_utility~set_request_uri
+      EXPORTING
+        request = client-&gt;request
+        uri     = lv_url.
 
     &quot;requestheaders set
-    DATA lt_headers TYPE zgoogle_http_param_t.
-    DATA ls_headers TYPE zgoogle_http_param_s.
-
     lt_headers = io_http_request-&gt;getrequestheaders( ).
     LOOP AT lt_headers INTO ls_headers.
       client-&gt;request-&gt;set_header_field(
@@ -112,32 +110,45 @@
     &quot;user agent set
     &quot;TODO
 
-
-
     &quot;requestbody set
-    DATA lt_postbody TYPE zgoogle_postbody_t.
-    DATA ls_postbody TYPE zgoogle_postbody_s.
-    DATA lv_str TYPE string.
-    DATA lv_get TYPE string.
     lt_postbody = io_http_request-&gt;getpostbody( ).
+    DESCRIBE TABLE lt_postbody LINES lv_lines.
 
     IF lt_postbody IS NOT INITIAL.
       LOOP AT lt_postbody INTO ls_postbody.
 *optional Request fields
-        lv_str = cl_http_utility=&gt;if_http_utility~escape_url( ls_postbody-value ).
+        IF ip_content_type EQ zgoogle_io_generic=&gt;c_ctype_xwwwformurlencoded.
+          lv_str = cl_http_utility=&gt;if_http_utility~escape_url( ls_postbody-value ).
+        ELSE.
+          lv_str = ls_postbody-value.
+        ENDIF.
         CALL METHOD request-&gt;set_form_field
           EXPORTING
             name  = ls_postbody-key
             value = lv_str.
-        IF sy-tabix NE 1.
-          CONCATENATE lv_get &apos;&amp;&apos; ls_postbody-key &apos;=&apos; lv_str INTO lv_get.
-        ELSE.
-          CONCATENATE lv_get ls_postbody-key &apos;=&apos; lv_str INTO lv_get.
+        IF ip_content_type EQ zgoogle_io_generic=&gt;c_ctype_xwwwformurlencoded.
+          IF sy-tabix NE 1.
+            CONCATENATE lv_body &apos;&amp;&apos; ls_postbody-key &apos;=&apos; lv_str INTO lv_body.
+          ELSE.
+            CONCATENATE lv_body ls_postbody-key &apos;=&apos; lv_str INTO lv_body.
+          ENDIF.
+        ELSEIF ip_content_type EQ zgoogle_io_generic=&gt;c_ctype_json.
+          IF lv_lines EQ 1.
+            CONCATENATE lv_body &apos;{ &quot;&apos; ls_postbody-key &apos;&quot;: &quot;&apos; lv_str &apos;&quot; }&apos; INTO lv_body.
+          ELSE.
+            IF sy-tabix NE 1.
+              CONCATENATE lv_body &apos;{ &quot;&apos; ls_postbody-key &apos;&quot;: &quot;&apos; lv_str &apos;&quot;,&apos; INTO lv_body.
+            ELSEIF sy-tabix EQ lv_lines.
+              CONCATENATE lv_body &apos;&quot;&apos; ls_postbody-key &apos;&quot;: &quot;&apos; lv_str &apos;&quot; }&apos;  INTO lv_body.
+            ELSE.
+              CONCATENATE lv_body &apos;&quot;&apos; ls_postbody-key &apos;&quot;: &quot;&apos; lv_str &apos;&quot;,&apos;  INTO lv_body.
+            ENDIF.
+          ENDIF.
         ENDIF.
       ENDLOOP.
     ENDIF.
 
-    client-&gt;request-&gt;set_cdata( lv_get ).
+    client-&gt;request-&gt;set_cdata( lv_body ).
 
     &quot;execute
     CALL METHOD client-&gt;send
@@ -322,24 +333,36 @@
   <localMacros>*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</localMacros>
   <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" STATE="1"/>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="INSERT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="INSERT" SCONAME="IT_POSTBODY" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_POSTBODY_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_POSTBODY_T"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="INSERT" SCONAME="IP_PARAMS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method INSERT.
+
+    DATA lt_results TYPE zgoogle_string_t.
+    DATA ls_results TYPE string.
+    DATA ls_data TYPE zgoogle_timeline_s.
+
+    lt_results = me-&gt;call( name = &apos;insert&apos;
+                           arguments = ip_params
+                           it_postbody = it_postbody
+                           ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+  endmethod.</source>
+  </method>
   <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="LISTTIMELINE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="LISTTIMELINE" SCONAME="RS_RESULTS" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_TIMELINE_S"/>
    <source>METHOD listtimeline.
 
     DATA lt_results TYPE zgoogle_string_t.
     DATA ls_results TYPE string.
-
     DATA ls_data TYPE zgoogle_timeline_s.
-
-
-    lt_results = me-&gt;call( name = &apos;list&apos;
-                           arguments = &apos;&apos; ).
-
-    &quot;JSON REFERENCE
     DATA lo_json TYPE REF TO zcl_json_document.
 
-    READ TABLE lt_results INDEX 1 INTO ls_results.
+    lt_results = me-&gt;call( name = &apos;list&apos;
+                           arguments = &apos;&apos;
+                           ip_content_type = zgoogle_io_generic=&gt;c_ctype_xwwwformurlencoded ).
 
+    READ TABLE lt_results INDEX 1 INTO ls_results.
     zcl_json_document=&gt;create_with_json(
       EXPORTING
         json          = ls_results
@@ -347,19 +370,13 @@
       RECEIVING
         json_document = lo_json    &quot; JSON Document
     ).
-
     lo_json-&gt;get_data(
 *        EXPORTING
 *          json              =
     IMPORTING
       data              = ls_data
   ).
-
     rs_results = ls_data.
-
-
-
-
 
   ENDMETHOD.</source>
   </method>
@@ -425,12 +442,13 @@
    <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="AUTHENTICATE" SCONAME="RS_AUTH" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_KCV_S" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_TOKEN_S"/>
    <source>METHOD authenticate.
 
-    me-&gt;pv_authenticated = &apos;X&apos;.
-
     DATA lo_object TYPE REF TO object.
-    lo_object = me-&gt;getauth( ).
-
     DATA lo_desc TYPE REF TO cl_abap_typedescr.
+    DATA lv_string TYPE string.
+    DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
+
+    me-&gt;pv_authenticated = &apos;X&apos;.
+    lo_object = me-&gt;getauth( ).
     cl_abap_typedescr=&gt;describe_by_object_ref(
       EXPORTING
         p_object_ref         =   lo_object  &quot; Reference to described object
@@ -444,16 +462,13 @@
 *       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
 *                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
-    DATA lv_string TYPE string.
     lv_string = lo_desc-&gt;get_relative_name( ).
     CASE lv_string.
       WHEN zgoogle_auth_oauth2=&gt;pc_name.
-        DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
         lo_auth ?= lo_object.
     ENDCASE.
 
     IF ip_code IS SUPPLIED.
-
       rs_auth = lo_auth-&gt;authenticate( ip_code = ip_code ).
     else.
       rs_auth = lo_auth-&gt;authenticate( is_access = is_access ).
@@ -477,13 +492,13 @@
    <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="CREATEAUTHURL" SCONAME="RP_URL" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <source>METHOD createauthurl.
     DATA lv_scopes TYPE string.
-    lv_scopes = me-&gt;preparescopes( ).
-
-
     DATA lo_object TYPE REF TO object.
-    lo_object = me-&gt;getauth( ).
-
     DATA lo_desc TYPE REF TO cl_abap_typedescr.
+    DATA lv_string TYPE string.
+    DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
+
+    lv_scopes = me-&gt;preparescopes( ).
+    lo_object = me-&gt;getauth( ).
     cl_abap_typedescr=&gt;describe_by_object_ref(
       EXPORTING
         p_object_ref         =   lo_object  &quot; Reference to described object
@@ -497,11 +512,9 @@
 *       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
 *                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
-    DATA lv_string TYPE string.
     lv_string = lo_desc-&gt;get_relative_name( ).
     CASE lv_string.
       WHEN zgoogle_auth_oauth2=&gt;pc_name.
-        DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
         lo_auth ?= lo_object.
     ENDCASE.
 
@@ -510,17 +523,13 @@
   </method>
   <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="EXECUTE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="17 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="EXECUTE" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
-   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="EXECUTE" SCONAME="ET_RETURN" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="EXECUTE" SCONAME="IP_CONTENT_TYPE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_string" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING"/>
+   <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="EXECUTE" SCONAME="ET_RETURN" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
    <source>METHOD execute.
 
-*    if ($request instanceof Google_Http_Request) {
-*      $request-&gt;setUserAgent(
-*          $this-&gt;getApplicationName()
-*          . &quot; &quot; . self::USER_AGENT_SUFFIX
-*          . $this-&gt;getLibraryVersion()
-*      );
     DATA lt_config TYPE zgoogle_kcv_t.
     DATA ls_config TYPE zgoogle_kcv_s.
+
     me-&gt;getclassconfig(
 *       io_class = &apos;Google_Http_Request&apos;
      ip_key   =  &apos;disable_gzip&apos;
@@ -533,17 +542,10 @@
 *      $request-&gt;maybeMoveParametersToBody();
     et_return = zgoogle_http_rest=&gt;execute(
       EXPORTING
+        ip_content_type = ip_content_type
         io_http_request =  io_http_request   &quot; google_http_request
         io_client       =  me   &quot; zgoogle_client
     ).
-
-
-*    } else if ($request instanceof Google_Http_Batch) {
-*      return $request-&gt;execute();
-*    } else {
-*      throw new Google_Exception(&quot;Do not know how to execute this type of object.&quot;);
-*    }
-
 
   ENDMETHOD.</source>
   </method>
@@ -552,9 +554,11 @@
    <source>method GETACCESSTOKEN.
 
     DATA lo_object type ref to object.
-    lo_object = me-&gt;getauth( ).
-
     DATA lo_desc TYPE REF TO cl_abap_typedescr.
+    DATA lv_string TYPE string.
+    DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
+
+    lo_object = me-&gt;getauth( ).
     cl_abap_typedescr=&gt;describe_by_object_ref(
       EXPORTING
         p_object_ref         =   lo_object  &quot; Reference to described object
@@ -568,11 +572,9 @@
 *       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
 *                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
-    DATA lv_string TYPE string.
     lv_string = lo_desc-&gt;get_relative_name( ).
     CASE lv_string.
       WHEN zgoogle_auth_oauth2=&gt;pc_name.
-        DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
         lo_auth ?= lo_object.
     ENDCASE.
 
@@ -612,7 +614,6 @@
     DATA lo_desc TYPE REF TO cl_abap_typedescr.
 
     IF ip_class IS INITIAL.
-
       cl_abap_typedescr=&gt;describe_by_object_ref(
         EXPORTING
           p_object_ref         =   io_class  &quot; Reference to described object
@@ -626,12 +627,9 @@
 *       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
 *                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
       ENDIF.
-
       lv_class = lo_desc-&gt;get_relative_name( ).
-
     ELSE.
       lv_class = ip_class.
-
     ENDIF.
 
     rt_value = me-&gt;po_config-&gt;getclassconfig(
@@ -644,9 +642,9 @@
   <method CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETIO" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="16 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_CLIENT" CMPNAME="GETIO" SCONAME="RO_IO" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_IO_GENERIC" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_IO_GENERIC"/>
    <source>METHOD getio.
+    DATA lv_string TYPE string.
 
     IF me-&gt;po_io IS INITIAL.
-      DATA lv_string TYPE string.
       lv_string = me-&gt;po_config-&gt;getioclass( ).
       CREATE OBJECT me-&gt;po_io TYPE (lv_string).
     ENDIF.
@@ -738,32 +736,6 @@
 
     DATA lv_requesturl TYPE string.
     CONCATENATE servicepath respath INTO lv_requesturl.
-*    $uriTemplateVars = array();
-*    $queryVars = array();
-*    foreach ($params as $paramName =&gt; $paramSpec) {
-*      if ($paramSpec[&apos;type&apos;] == &apos;boolean&apos;) {
-*        $paramSpec[&apos;value&apos;] = ($paramSpec[&apos;value&apos;]) ? &apos;true&apos; : &apos;false&apos;;
-*      }
-*      if ($paramSpec[&apos;location&apos;] == &apos;path&apos;) {
-*        $uriTemplateVars[$paramName] = $paramSpec[&apos;value&apos;];
-*      } else if ($paramSpec[&apos;location&apos;] == &apos;query&apos;) {
-*        if (isset($paramSpec[&apos;repeated&apos;]) &amp;&amp; is_array($paramSpec[&apos;value&apos;])) {
-*          foreach ($paramSpec[&apos;value&apos;] as $value) {
-*            $queryVars[] = $paramName . &apos;=&apos; . rawurlencode($value);
-*          }
-*        } else {
-*          $queryVars[] = $paramName . &apos;=&apos; . rawurlencode($paramSpec[&apos;value&apos;]);
-*        }
-*      }
-*    if (count($uriTemplateVars)) {
-*      $uriTemplateParser = new Google_Utils_URITemplate();
-*      $requestUrl = $uriTemplateParser-&gt;parse($requestUrl, $uriTemplateVars);
-*    }
-*
-*    if (count($queryVars)) {
-*      $requestUrl .= &apos;?&apos; . implode($queryVars, &apos;&amp;&apos;);
-*    }
-*
     rp_value = lv_requesturl.
 
   ENDMETHOD.</source>
@@ -771,37 +743,36 @@
   <method CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="EXECUTE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="1" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="EXECUTE" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
    <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="EXECUTE" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
-   <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="EXECUTE" SCONAME="ET_RETURN" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="EXECUTE" SCONAME="IP_CONTENT_TYPE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_string" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING"/>
+   <parameter CLSNAME="ZGOOGLE_HTTP_REST" CMPNAME="EXECUTE" SCONAME="ET_RETURN" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
    <source>METHOD execute.
 
     DATA lo_response TYPE REF TO if_http_response.
     DATA xml_xstring TYPE string.
-
     DATA lo_io TYPE REF TO zgoogle_io_generic.
+    DATA lv_code TYPE i.
+    DATA ls_return type line of zgoogle_string_t.
+
     lo_io = io_client-&gt;getio( ).
+
     lo_io-&gt;makerequest(
       EXPORTING
         io_http_request  =   io_http_request   &quot; google_http_request
+        ip_content_type = ip_content_type
       IMPORTING
         eo_http_response = lo_response    &quot; HTTP Framework (iHTTP) HTTP Response
         ev_responsestr   = xml_xstring
     ).
 
     IF lo_response IS NOT INITIAL.
-      DATA lv_code TYPE i.
       lo_response-&gt;get_status(
         IMPORTING
           code   =  lv_code  &quot; HTTP status code
 *        reason =     &quot; HTTP status description
       ).
       IF lv_code EQ 200.
-        DATA ls_return type line of zgoogle_string_t.
         ls_return = xml_xstring.
         append ls_return to et_return.
-
-*    $httpRequest-&gt;setExpectedClass($req-&gt;getExpectedClass());
-*     lv_ret = me-&gt;decodeHttpResponse( ip_json = xml_xstring ).
-*return lv_ret
       ENDIF.
     ENDIF.
 
@@ -1277,12 +1248,6 @@
   <method CLSNAME="ZGOOGLE_HTTP_REQUEST" CMPNAME="DISABLEGZIP" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <source>METHOD disablegzip.
 
-*    if (
-*        isset($this-&gt;requestHeaders[&apos;accept-encoding&apos;]) &amp;&amp;
-*        $this-&gt;requestHeaders[&apos;accept-encoding&apos;] == &quot;gzip&quot;
-*    ) {
-*      unset($this-&gt;requestHeaders[&apos;accept-encoding&apos;]);
-*    }
     CLEAR me-&gt;pv_cangzip.
     REPLACE zgoogle_http_request=&gt;gzip_ua WITH &apos;&apos; INTO me-&gt;pv_useragent.
 
@@ -1398,26 +1363,11 @@
     DATA lv_url TYPE string.
     lv_url = ip_url.
     IF lv_url(4) NE &apos;http&apos;.
-*     Force the path become relative.
       IF lv_url(1) NE &apos;/&apos;.
         CONCATENATE &apos;/&apos; lv_url INTO lv_url.
       ENDIF.
     ENDIF.
-*    $parts = parse_url($url);
-*    if (isset($parts[&apos;host&apos;])) {
-*      $this-&gt;baseComponent = sprintf(
-*          &quot;%s%s%s&quot;,
-*          isset($parts[&apos;scheme&apos;]) ? $parts[&apos;scheme&apos;] . &quot;://&quot; : &apos;&apos;,
-*          isset($parts[&apos;host&apos;]) ? $parts[&apos;host&apos;] : &apos;&apos;,
-*          isset($parts[&apos;port&apos;]) ? &quot;:&quot; . $parts[&apos;port&apos;] : &apos;&apos;
-*      );
-*    }
     me-&gt;pv_path = lv_url.
-*    $this-&gt;path = isset($parts[&apos;path&apos;]) ? $parts[&apos;path&apos;] : &apos;&apos;;
-*    $this-&gt;queryParams = array();
-*    if (isset($parts[&apos;query&apos;])) {
-*      $this-&gt;queryParams = $this-&gt;parseQuery($parts[&apos;query&apos;]);
-*    }
 
   endmethod.</source>
   </method>
@@ -1449,19 +1399,29 @@
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="AUTHENTICATE" SCONAME="RS_AUTH" VERSION="1" LANGU="E" DESCRIPT="Boolean" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_TOKEN_S"/>
    <source>METHOD authenticate.
 
-    IF is_access IS SUPPLIED.
-      me-&gt;setaccesstoken( is_token = is_access ).
-      rs_auth = me-&gt;ps_token.
-      RETURN.
-    ENDIF.
-
-*   We got here from the redirect from a successful authorization grant,
-*   fetch the access token
     DATA lo_http_request TYPE REF TO zgoogle_http_request.
     DATA lt_body TYPE zgoogle_postbody_t.
     DATA ls_body TYPE zgoogle_postbody_s.
     DATA lt_result TYPE zgoogle_kcv_t.
     DATA ls_result TYPE zgoogle_kcv_s.
+    DATA lt_config TYPE zgoogle_kcv_t.
+    DATA ls_config TYPE zgoogle_kcv_s.
+    DATA lv_code TYPE i.
+    DATA lo_response TYPE REF TO if_http_response.
+    DATA xml_xstring TYPE string.
+    DATA lo_io TYPE REF TO zgoogle_io_generic.
+    DATA: lv_url2 TYPE string.
+    DATA: lv_url3 TYPE string.
+    DATA: len TYPE i.
+    DATA: pos1 TYPE i.
+    DATA: pos2 TYPE i.
+    DATA: pos3 TYPE i.
+
+    IF is_access IS SUPPLIED.
+      me-&gt;setaccesstoken( is_token = is_access ).
+      rs_auth = me-&gt;ps_token.
+      RETURN.
+    ENDIF.
 
     ls_body-key = &apos;code&apos;.
     ls_body-value = ip_code.
@@ -1497,13 +1457,6 @@
     ls_body-value = ls_result-vvalue.
     APPEND ls_body TO lt_body.
 
-    DATA: lv_url2 TYPE string.
-    DATA: lv_url3 TYPE string.
-    DATA: len TYPE i.
-    DATA: pos1 TYPE i.
-    DATA: pos2 TYPE i.
-    DATA: pos3 TYPE i.
-
     FIND FIRST OCCURRENCE OF &apos;//&apos; IN me-&gt;pc_oauth2_token_uri MATCH OFFSET pos1.
     FIND FIRST OCCURRENCE OF &apos;/o/&apos; IN me-&gt;pc_oauth2_token_uri MATCH OFFSET pos2.
     len = pos2 - pos1 - 2.
@@ -1511,7 +1464,6 @@
     lv_url2 = me-&gt;pc_oauth2_token_uri+pos1(len).
     len = strlen( me-&gt;pc_oauth2_token_uri ) - pos2.
     lv_url3 = me-&gt;pc_oauth2_token_uri+pos2(len).
-
 
     CREATE OBJECT lo_http_request
       EXPORTING
@@ -1521,8 +1473,6 @@
 
     lo_http_request-&gt;setbasecomponent( ip_basepath = lv_url2 ).
 
-    DATA lt_config TYPE zgoogle_kcv_t.
-    DATA ls_config TYPE zgoogle_kcv_s.
     me-&gt;po_client-&gt;getclassconfig(
 *       io_class = &apos;Google_Http_Request&apos;
      ip_key   =  &apos;disable_gzip&apos;
@@ -1533,13 +1483,10 @@
       lo_http_request-&gt;disablegzip( ).
     ENDIF.
 
-    DATA lo_response TYPE REF TO if_http_response.
-    DATA xml_xstring TYPE string.
-
-    DATA lo_io TYPE REF TO zgoogle_io_generic.
     lo_io = me-&gt;po_client-&gt;getio( ).
     lo_io-&gt;makerequest(
       EXPORTING
+        ip_content_type  = zgoogle_io_generic=&gt;c_ctype_xwwwformurlencoded
         io_http_request  =   lo_http_request   &quot; google_http_request
       IMPORTING
         eo_http_response = lo_response    &quot; HTTP Framework (iHTTP) HTTP Response
@@ -1547,7 +1494,6 @@
     ).
 
     IF lo_response IS NOT INITIAL.
-      DATA lv_code TYPE i.
       lo_response-&gt;get_status(
         IMPORTING
           code   =  lv_code  &quot; HTTP status code
@@ -1555,7 +1501,6 @@
       ).
       IF lv_code EQ 200.
         me-&gt;setaccesstoken( ip_json = xml_xstring ).
-
         rs_auth = me-&gt;ps_token.
       ENDIF.
     ENDIF.
@@ -1734,6 +1679,14 @@
     DATA lv_body          TYPE string.
     DATA lo_writer        TYPE REF TO cl_sxml_string_writer.
     DATA lv_token         TYPE xstring.
+    DATA lt_config TYPE zgoogle_kcv_t.
+    DATA ls_config TYPE zgoogle_kcv_s.
+    DATA: lv_url2 TYPE string.
+    DATA: lv_url3 TYPE string.
+    DATA: len TYPE i.
+    DATA: pos1 TYPE i.
+    DATA: pos2 TYPE i.
+    DATA: pos3 TYPE i.
 
     ls_postbody-key = &apos;client_id&apos;.
     ls_postbody-value = ip_client_id.
@@ -1750,13 +1703,6 @@
     ls_postbody-key = &apos;grant_type&apos;.
     ls_postbody-value = ip_grant_type.
     APPEND ls_postbody TO lt_postbody.
-
-    DATA: lv_url2 TYPE string.
-    DATA: lv_url3 TYPE string.
-    DATA: len TYPE i.
-    DATA: pos1 TYPE i.
-    DATA: pos2 TYPE i.
-    DATA: pos3 TYPE i.
 
     FIND FIRST OCCURRENCE OF &apos;//&apos; IN me-&gt;pc_oauth2_token_uri MATCH OFFSET pos1.
     FIND FIRST OCCURRENCE OF &apos;/o/&apos; IN me-&gt;pc_oauth2_token_uri MATCH OFFSET pos2.
@@ -1775,10 +1721,6 @@
 
     lo_http_request-&gt;setbasecomponent( ip_basepath = lv_url2 ).
 
-
-
-    DATA lt_config TYPE zgoogle_kcv_t.
-    DATA ls_config TYPE zgoogle_kcv_s.
     me-&gt;po_client-&gt;getclassconfig(
 *       io_class = &apos;Google_Http_Request&apos;
      ip_key   =  &apos;disable_gzip&apos;
@@ -1790,6 +1732,7 @@
     ENDIF.
     me-&gt;po_client-&gt;getio( )-&gt;makerequest(
       EXPORTING
+        ip_content_type  = zgoogle_io_generic=&gt;c_ctype_xwwwformurlencoded
         io_http_request  = lo_http_request    &quot; google_http_request
       IMPORTING
         eo_http_response = lo_http_response    &quot; HTTP Framework (iHTTP) HTTP Response
@@ -1811,20 +1754,8 @@
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SETACCESSTOKEN" SCONAME="IP_REFRESH" VERSION="1" LANGU="E" DESCRIPT="Boolean" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_BOOL" PAROPTIONL="X"/>
    <source>METHOD setaccesstoken.
 
-    IF ip_json IS SUPPLIED.
-
-      &quot;JSON REFERENCE
-      DATA lo_json TYPE REF TO zcl_json_document.
-
-      zcl_json_document=&gt;create_with_json(
-        EXPORTING
-          json          = ip_json
-*      date_format   =
-        RECEIVING
-          json_document = lo_json    &quot; JSON Document
-      ).
-
-      TYPES: BEGIN OF s_data,
+    DATA lo_json TYPE REF TO zcl_json_document.
+    TYPES: BEGIN OF s_data,
                 error TYPE string,
                 error_description TYPE string,
                 access_token TYPE string,
@@ -1833,26 +1764,34 @@
                 refresh_token TYPE string,
                 id_token TYPE string,
              END OF s_data.
-      DATA ls_data TYPE s_data.
+    DATA ls_data TYPE s_data.
 
+    IF ip_json IS SUPPLIED.
+      zcl_json_document=&gt;create_with_json(
+        EXPORTING
+          json          = ip_json
+*      date_format   =
+        RECEIVING
+          json_document = lo_json    &quot; JSON Document
+      ).
       lo_json-&gt;get_data(
         IMPORTING
           data              = ls_data
       ).
 
       me-&gt;ps_token-expires_in = ls_data-expires_in.
-      if ip_refresh ne &apos;X&apos;.
+      IF ip_refresh NE &apos;X&apos;.
         me-&gt;ps_token-refresh_token = ls_data-refresh_token.
-      endif.
+      ENDIF.
       me-&gt;ps_token-value = ls_data-access_token.
       me-&gt;ps_token-created = sy-uzeit.
 
 *      CATCH zcx_json_document.    &quot;
     ELSE.
       me-&gt;ps_token-expires_in = is_token-expires_in.
-      if ip_refresh ne &apos;X&apos;.
+      IF ip_refresh NE &apos;X&apos;.
         me-&gt;ps_token-refresh_token = is_token-refresh_token.
-      endif.
+      ENDIF.
       me-&gt;ps_token-value = is_token-access_token.
       me-&gt;ps_token-created = is_token-created.
     ENDIF.
@@ -1864,13 +1803,14 @@
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="IO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SIGN" SCONAME="RO_HTTP_REQUEST" VERSION="1" LANGU="E" DESCRIPT="google_http_request" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_HTTP_REQUEST"/>
    <source>METHOD sign.
-*TODO
-*    add the developer key to the request before signing it
-
-    ro_http_request = io_http_request.
 
     DATA lt_result TYPE zgoogle_kcv_t.
     DATA ls_result TYPE zgoogle_kcv_s.
+    DATA lv_devkey TYPE string.
+    DATA lv_value TYPE string.
+    DATA lv_key TYPE string value &apos;Authorization&apos;.
+
+    ro_http_request = io_http_request.
 
     lt_result = me-&gt;po_client-&gt;getclassconfig(
        io_class = me
@@ -1879,7 +1819,6 @@
    ).
 
     READ TABLE lt_result INTO ls_result INDEX 1.
-    DATA lv_devkey TYPE string.
 
     IF ls_result-vvalue IS NOT INITIAL.
       ro_http_request-&gt;setqueryparam( ip_key = &apos;key&apos; ip_value = ls_result-vvalue ).   &quot;ATU
@@ -1889,7 +1828,6 @@
     IF me-&gt;ps_token IS INITIAL AND me-&gt;pv_assertioncredentials IS INITIAL. &quot;ATU
       RETURN.
     ENDIF.
-
 
 *    Check if the token is set to expire in the next 30 seconds
 *    (or has already expired).
@@ -1909,8 +1847,6 @@
     ENDIF.
 
 *   Add the OAuth2 header to the request
-    DATA lv_value TYPE string.
-    DATA lv_key TYPE string value &apos;Authorization&apos;.
     CONCATENATE &apos;Bearer &apos; me-&gt;ps_token-value INTO lv_value RESPECTING BLANKS.
     ro_http_request-&gt;setrequestheaders( EXPORTING ip_key = lv_key
                                                   ip_value = lv_value ).
@@ -4548,16 +4484,25 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
   <method CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " MTDTYPE="0" MTDDECLTYP="0" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="NAME" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="ARGUMENTS" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
-   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="ET_RETURN" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="IT_POSTBODY" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_POSTBODY_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_POSTBODY_T" PAROPTIONL="X"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="IP_CONTENT_TYPE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_string" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_RESOURCE" CMPNAME="CALL" SCONAME="ET_RETURN" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="5 " DISPID="0 " PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_STRING_T"/>
    <source>METHOD call.
 
-    &quot;TODO
     DATA ls_resource TYPE zgoogle_methods_s.
     DATA lv_path TYPE string.
     DATA lv_httpmethod TYPE string.
     DATA lv_parameters TYPE string.
-
-    &quot;MISSING postbody CONSTRUCTION
+    DATA lv_servicepath TYPE string.
+    DATA lv_url TYPE string.
+    DATA lo_http_request TYPE REF TO zgoogle_http_request.
+    DATA lt_postbody TYPE zgoogle_postbody_t.
+    DATA lv_basepath TYPE string.
+    DATA lo_object TYPE REF TO object.
+    DATA lo_desc TYPE REF TO cl_abap_typedescr.
+    DATA lv_string TYPE string.
+    DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
+    DATA ls_token TYPE zgoogle_token_s.
 
     &quot;MISSING PARAMETERS CONSTRUCTION
 
@@ -4568,30 +4513,25 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
       &quot;lv_parameters =...
     ENDLOOP.
 
-    DATA lv_servicepath TYPE string.
     lv_servicepath = me-&gt;po_service-&gt;servicepath.
-
-    DATA lv_url TYPE string.
     lv_url = zgoogle_http_rest=&gt;createrequesturi(
                   servicepath = lv_servicepath
                   respath = lv_path
                   params = lv_parameters
     ).
 
-    DATA lo_http_request TYPE REF TO zgoogle_http_request.
-    DATA lt_postbody TYPE zgoogle_postbody_t.
+    IF it_postbody IS SUPPLIED.
+      lt_postbody = it_postbody.
+    ENDIF.
+
     CREATE OBJECT lo_http_request
       EXPORTING
         url      = lv_url
         method   = lv_httpmethod
         postbody = lt_postbody.
 
-    DATA lv_basepath TYPE string.
     lv_basepath = me-&gt;po_client-&gt;getbasepath( ).
     lo_http_request-&gt;setbasecomponent( ip_basepath = lv_basepath ).
-
-    DATA lo_object TYPE REF TO object.
-    DATA lo_desc TYPE REF TO cl_abap_typedescr.
     lo_object = me-&gt;po_client-&gt;getauth( ).
     cl_abap_typedescr=&gt;describe_by_object_ref(
       EXPORTING
@@ -4606,30 +4546,25 @@ ENDCLASS.                    &quot;lcl_zjson IMPLEMENTATION</localImplementation
 *       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
 *                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
-    DATA lv_string TYPE string.
     lv_string = lo_desc-&gt;get_relative_name( ).
     CASE lv_string.
       WHEN zgoogle_auth_oauth2=&gt;pc_name.
-        DATA lo_auth TYPE REF TO zgoogle_auth_oauth2.
         lo_auth ?= me-&gt;po_client-&gt;getauth( ).
         lo_http_request ?= lo_auth-&gt;sign( lo_http_request ).
     ENDCASE.
 
-    DATA ls_token TYPE zgoogle_token_s.
     ls_token = lo_auth-&gt;getaccesstoken( ).
 
     IF ls_token-value IS NOT INITIAL.
-
       IF me-&gt;po_client-&gt;shoulddefer( ) EQ &apos;X&apos;.
 *      // If we are in batch or upload mode, return the raw request.
 *      return $httpRequest;
       ENDIF.
 
-      et_return = me-&gt;po_client-&gt;execute( io_http_request = lo_http_request ).
-    else.
-
-      RAISE EXCEPTION TYPE ZCX_GOOGLE_EXCEPTION.
-
+      et_return = me-&gt;po_client-&gt;execute( io_http_request = lo_http_request
+                                          ip_content_type = ip_content_type ).
+    ELSE.
+      RAISE EXCEPTION TYPE zcx_google_exception.
     ENDIF.
 
   ENDMETHOD.</source>
@@ -4723,17 +4658,23 @@ START-OF-SELECTION.
 
   CREATE OBJECT lo_service EXPORTING io_client = lo_client.
 
+* Retrieve stored access token
   SELECT SINGLE * FROM zgoogle_access INTO ls_access WHERE username = sy-uname.
 
-  PERFORM authorize.
+  PERFORM authorize. &quot;If the access token is provided this step will be jumped
 
   IF lo_client-&gt;getaccesstoken( )-value IS NOT INITIAL.
 *AUTHENTICATED
-    PERFORM execute.
+    PERFORM execute. &quot;If needed the execution of the services perform refresh token
   ENDIF.
 
 
-
+*&amp;---------------------------------------------------------------------*
+*&amp;      FORM authorize.
+*&amp;---------------------------------------------------------------------*
+*       Execute user authorization retrieving exchange token and then
+*       perform authentication
+*----------------------------------------------------------------------*
 FORM authorize.
   WHILE lo_client-&gt;getaccesstoken( )-value IS INITIAL.
 
@@ -4752,27 +4693,44 @@ FORM authorize.
   ENDWHILE.
 ENDFORM.
 
+*&amp;---------------------------------------------------------------------*
+*&amp;      FORM authenticate.
+*&amp;---------------------------------------------------------------------*
+*       Execute authentication using the exchange token given by authorization
+*       or using the stored access token
+*----------------------------------------------------------------------*
 FORM authenticate.
 
   IF ls_access-access_token IS INITIAL.
-
-
     IF lv_xchagetoken IS NOT INITIAL.
-
       ls_token = lo_client-&gt;authenticate( ip_code = lv_xchagetoken ).
     ENDIF.
-*-----------------------------------------------
   ELSE.
     lo_client-&gt;authenticate( is_access = ls_access ).
   ENDIF.
 
 ENDFORM.
 
-
+*&amp;---------------------------------------------------------------------*
+*&amp;      FORM execute.
+*&amp;---------------------------------------------------------------------*
+*       Execute one insert and list all the items in the current
+*       user timeline for the current application
+*----------------------------------------------------------------------*
 FORM execute.
   &quot;Call the service
   DATA lo_exc TYPE REF TO zcx_google_exception.
   TRY.
+      DATA lt_postbody TYPE ZGOOGLE_POSTBODY_T.
+      DATA ls_postbody TYPE ZGOOGLE_POSTBODY_s.
+      ls_postbody-key = &apos;text&apos;.
+      ls_postbody-value = &apos;CARD FROM ABAP!&apos;.
+      append ls_postbody to lt_postbody.
+      lo_service-&gt;timeline-&gt;insert(
+        EXPORTING
+          it_postbody = lt_postbody    &quot; ZGOOGLE_POSTBODY_T
+          ip_params   = &apos;&apos;
+      ).
       ls_results = lo_service-&gt;timeline-&gt;listtimeline( ).
     CATCH zcx_google_exception INTO lo_exc. &quot;Bad refresh token
       PERFORM authorize.
@@ -4780,16 +4738,14 @@ FORM execute.
 
   &quot;Store token info (after the service call because the token can be refreshed)
   ls_access-access_token = lo_client-&gt;getaccesstoken( )-value.
-*    ls_access-token_type = ls_token-token_type.
   ls_access-expires_in = lo_client-&gt;getaccesstoken( )-expires_in.
   ls_access-refresh_token = lo_client-&gt;getaccesstoken( )-refresh_token.
   ls_access-created = lo_client-&gt;getaccesstoken( )-created.
   ls_access-username = sy-uname.
   MODIFY zgoogle_access FROM ls_access.
 
-
+  &quot;Print results
   MOVE ls_results-items TO lt_results_details.
-
   WRITE: &apos;TIMELINE ITEMS FOR USER &apos;, sy-uname, &apos;:&apos;.
   WRITE /.
   LOOP AT lt_results_details INTO ls_results_details.
@@ -4798,8 +4754,6 @@ FORM execute.
     ELSE.
       WRITE: / sy-tabix, &apos;. - &apos;, ls_results_details-html.
     ENDIF.
-
-
   ENDLOOP.
 ENDFORM.
 
