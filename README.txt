@@ -49,6 +49,6 @@ Next steps for collaborators:
 --------------------------------------
 
 - Implement a good user interface for the demo
-- Implement more methods (delete, get, etc.)
+- Implement more methods (get, update, etc.)
 
 

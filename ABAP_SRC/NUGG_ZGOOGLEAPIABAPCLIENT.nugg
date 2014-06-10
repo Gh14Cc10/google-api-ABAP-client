@@ -602,7 +602,7 @@ public section.
         name = &apos;Content-length&apos;
         value = &apos;0&apos;
         ).
-    ELSE.
+    ELSEIF lv_method EQ &apos;POST&apos;.
       CALL METHOD client-&gt;request-&gt;set_method(
         if_http_request=&gt;co_request_method_post ).
 
@@ -610,7 +610,8 @@ public section.
       name = &apos;Content-Type&apos;
       value = ip_content_type
       ).
-
+    ELSEIF lv_method EQ &apos;DELETE&apos;.
+      CALL METHOD client-&gt;request-&gt;set_method( &apos;DELETE&apos; ).
     ENDIF.
 
 * set protocol version
@@ -5227,7 +5228,7 @@ public section.
   lv_url = zgoogle_http_rest=&gt;createrequesturi(
                 servicepath = lv_servicepath
                 respath = lv_path
-                params = it_arguments
+                params = lt_param
   ).
 
   IF it_postbody IS SUPPLIED.
@@ -5314,7 +5315,10 @@ public section.
       value(RS_RESULTS) type ZGOOGLE_TIMELINE_S .
   methods INSERT
     importing
-      value(IT_POSTBODY) type ZGOOGLE_POSTBODY_T .</publicSection>
+      value(IT_POSTBODY) type ZGOOGLE_POSTBODY_T .
+  methods DELETE
+    importing
+      value(IP_ID) type STRING .</publicSection>
   <protectedSection>protected section.</protectedSection>
   <privateSection>private section.</privateSection>
   <localImplementation>*&quot;* use this source file for the definition and implementation of
@@ -5328,6 +5332,29 @@ public section.
   <textPool/>
   <classDocumentation/>
   <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" STATE="1" AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDON="00000000"/>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="DELETE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="DELETE" SCONAME="IP_ID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>METHOD delete.
+
+  DATA lt_results TYPE zgoogle_string_t.
+  DATA ls_results TYPE string.
+  DATA ls_data TYPE zgoogle_timeline_s.
+
+  DATA lt_params TYPE zgoogle_http_param_t.
+  DATA ls_params TYPE zgoogle_http_param_s.
+
+  ls_params-vvalue = cl_http_utility=&gt;if_http_utility~escape_url( ip_id ).
+  ls_params-vkey = &apos;id&apos;.
+  append ls_params to lt_params.
+
+  lt_results = me-&gt;call( name = &apos;delete&apos;
+                         it_arguments = lt_params
+*                           it_postbody = it_postbody
+                         ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+ENDMETHOD.</source>
+   <methodDocumentation/>
+  </method>
   <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="INSERT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_TL_RSS" CMPNAME="INSERT" SCONAME="IT_POSTBODY" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_POSTBODY_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_POSTBODY_T"/>
    <source>method INSERT.
@@ -5678,7 +5705,7 @@ ENDMETHOD.</source>
   <t100 SPRSL="E" ARBGB="ZJSON" MSGNR="002" TEXT="Method not supported yet -&gt; see SAP Note 1648418"/>
   <t100t SPRSL="E" ARBGB="ZJSON" STEXT="Messages JSON Document Class"/>
  </MSAG>
- <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20140610" VERN="000008" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20140610" STIME="160159" IDATE="20140610" ITIME="160159" UCCHECK="X">
+ <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20140610" VERN="000009" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20140610" STIME="175134" IDATE="20140610" ITIME="175134" UCCHECK="X">
   <textPool>
    <language SPRAS="E">
     <textElement ID="R" ENTRY="Program ZGOOGLE_TEST" LENGTH="20 "/>
@@ -5842,22 +5869,28 @@ FORM execute.
 *      ).
 *      CLEAR lt_postbody.
 *
-*      &quot;Approval insertion
-*      ls_postbody-key = &apos;&quot;text&quot;&apos;.
-*      ls_postbody-value = &apos;&quot;Approve/Reject example&quot;&apos;.
-*      APPEND ls_postbody TO lt_postbody.
-*      ls_postbody-key = &apos;&quot;menuItems&quot;&apos;.
-*      ls_postbody-value = &apos;[ { &quot;id&quot;: &quot;APPROVE&quot;, &quot;action&quot;: &quot;CUSTOM&quot;, &quot;values&quot;: [ { &quot;displayName&quot;: &quot;APPROVE&quot;, &quot;iconUrl&quot;: &quot;https://mirror-api-playground.appspot.com/links/icons_30_0001_green.png&quot; } ] }, &apos;.
-*      CONCATENATE ls_postbody-value &apos;{ &quot;id&quot;: &quot;REJECT&quot;, &quot;action&quot;: &quot;CUSTOM&quot;, &quot;values&quot;: [ { &quot;displayName&quot;: &quot;REJECT&quot;, &quot;iconUrl&quot;: &quot;https://mirror-api-playground.appspot.com/links/icons_30_0003_red.png&quot; } ] } ]&apos; INTO ls_postbody-value.
-*      APPEND ls_postbody TO lt_postbody.
-*      lo_service-&gt;timeline-&gt;insert(
-*        EXPORTING
-*          it_postbody = lt_postbody    &quot; ZGOOGLE_POSTBODY_T
-*      ).
-*      CLEAR lt_postbody.
+      &quot;Approval insertion
+      ls_postbody-key = &apos;&quot;text&quot;&apos;.
+      ls_postbody-value = &apos;&quot;Approve/Reject example&quot;&apos;.
+      APPEND ls_postbody TO lt_postbody.
+      ls_postbody-key = &apos;&quot;menuItems&quot;&apos;.
+      ls_postbody-value = &apos;[ { &quot;id&quot;: &quot;APPROVE&quot;, &quot;action&quot;: &quot;CUSTOM&quot;, &quot;values&quot;: [ { &quot;displayName&quot;: &quot;APPROVE&quot;, &quot;iconUrl&quot;: &quot;https://mirror-api-playground.appspot.com/links/icons_30_0001_green.png&quot; } ] }, &apos;.
+      CONCATENATE ls_postbody-value &apos;{ &quot;id&quot;: &quot;REJECT&quot;, &quot;action&quot;: &quot;CUSTOM&quot;, &quot;values&quot;: [ { &quot;displayName&quot;: &quot;REJECT&quot;, &quot;iconUrl&quot;: &quot;https://mirror-api-playground.appspot.com/links/icons_30_0003_red.png&quot; } ] } ]&apos; INTO ls_postbody-value.
+      APPEND ls_postbody TO lt_postbody.
+      lo_service-&gt;timeline-&gt;insert(
+        EXPORTING
+          it_postbody = lt_postbody    &quot; ZGOOGLE_POSTBODY_T
+      ).
+      CLEAR lt_postbody.
 
       &quot;List
       ls_results = lo_service-&gt;timeline-&gt;listtimeline( ).
+
+      &quot;Delete last
+      IF ls_results-items IS NOT INITIAL.
+        READ TABLE ls_results-items INDEX 1 INTO ls_results_details.
+        lo_service-&gt;timeline-&gt;delete( ip_id = ls_results_details-id ).
+      ENDIF.
 
       &quot;Location get last
       ls_results_loc = lo_service-&gt;locations-&gt;getlast( ).
