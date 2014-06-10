@@ -48,9 +48,7 @@ SUBPACKAGES:
 Next steps for collaborators:
 --------------------------------------
 
-Implement the parameter management and the postbody management in the ZGOOGLE_RESOURCE include, class google_service_resource, method call.
-
-
-Implement a good user interface for the demo
+- Implement a good user interface for the demo
+- Implement more methods (delete, get, etc.)
 
 
