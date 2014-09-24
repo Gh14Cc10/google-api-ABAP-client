@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<nugget name="ZGOOGLEAPIABAPCLIENT">
+<nugget name="ZGOOGLE_ABAP_CLIENT">
  <CLAS CLSNAME="ZGOOGLE_HTTP_REST" VERSION="1" LANGU="E" DESCRIPT="google_http_rest" UUID="024C9CBAD63F1ED3BC8F0AADE9F80BBA" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" CHGDANYON="00000000" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="731" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
   <publicSection>class ZGOOGLE_HTTP_REST definition
   public
@@ -1115,7 +1115,7 @@ endmethod.</source>
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="REFRESHTOKENREQUEST" SCONAME="IP_REFRESH_TOKEN" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="3 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <parameter CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="REFRESHTOKENREQUEST" SCONAME="IP_GRANT_TYPE" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="4 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
    <exception CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="REFRESHTOKENREQUEST" SCONAME="GOOGLE_AUTH_EXCEPTION" VERSION="1" LANGU="E" DESCRIPT="Could not json decode the access token" MTDTYPE="0" EDITORDER="1 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611"/>
-   <source>method REFRESHTOKENREQUEST.
+   <source>METHOD refreshtokenrequest.
 
   DATA lt_postbody      TYPE zgoogle_postbody_t.
   DATA ls_postbody      TYPE zgoogle_postbody_s.
@@ -1157,7 +1157,7 @@ endmethod.</source>
   len = pos2 - pos1 - 2.
   pos1 = pos1 + 2.
   lv_url2 = me-&gt;pc_oauth2_token_uri+pos1(len).
-  len = STRLEN( me-&gt;pc_oauth2_token_uri ) - pos2.
+  len = strlen( me-&gt;pc_oauth2_token_uri ) - pos2.
   lv_url3 = me-&gt;pc_oauth2_token_uri+pos2(len).
 
   DATA lo_http_request TYPE REF TO zgoogle_http_request.
@@ -1216,15 +1216,16 @@ endmethod.</source>
 
 
 
-*
-  lo_http_response-&gt;get_status( IMPORTING code = lv_code ).
-  IF lv_code EQ 200.
-    me-&gt;setaccesstoken( ip_json = lv_body ip_refresh = &apos;X&apos; ).
-    me-&gt;ps_token-created = sy-uzeit.
+  IF lo_http_response IS NOT INITIAL.
+    lo_http_response-&gt;get_status( IMPORTING code = lv_code ).
+    IF lv_code EQ 200.
+      me-&gt;setaccesstoken( ip_json = lv_body ip_refresh = &apos;X&apos; ).
+      me-&gt;ps_token-created = sy-uzeit.
 *      rs_auth = me-&gt;ps_token.
+    ENDIF.
   ENDIF.
 
-endmethod.</source>
+ENDMETHOD.</source>
    <methodDocumentation/>
   </method>
   <method CLSNAME="ZGOOGLE_AUTH_OAUTH2" CMPNAME="SETACCESSTOKEN" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
@@ -1274,7 +1275,7 @@ endmethod.</source>
       ENDIF.
       me-&gt;ps_token-value = is_token-access_token.
       me-&gt;ps_token-created = is_token-created.
-      me-&gt;ps_token-data = sy-datum.
+      me-&gt;ps_token-data = is_token-data.
     ENDIF.
 
 
@@ -5764,7 +5765,7 @@ endmethod.</source>
   <t100 SPRSL="E" ARBGB="ZJSON" MSGNR="001" TEXT="Method not supported yet -&gt; see SAP Note 1648418"/>
   <t100t SPRSL="E" ARBGB="ZJSON"/>
  </MSAG>
- <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20140611" VERN="000016" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20140611" STIME="145740" IDATE="20140611" ITIME="145740" UCCHECK="X">
+ <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20140718" VERN="000017" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20140718" STIME="163348" IDATE="20140718" ITIME="163348" UCCHECK="X">
   <textPool>
    <language SPRAS="E">
     <textElement ID="R" ENTRY="Program ZGOOGLE_TEST" LENGTH="20 "/>
@@ -5972,10 +5973,10 @@ FORM execute.
       ls_results = lo_service-&gt;timeline-&gt;listtimeline( ).
 
       &quot;Delete last
-      IF ls_results-items IS NOT INITIAL.
-        READ TABLE ls_results-items INDEX 1 INTO ls_results_details.
-        lo_service-&gt;timeline-&gt;delete( ip_id = ls_results_details-id ).
-      ENDIF.
+*      IF ls_results-items IS NOT INITIAL.
+*        READ TABLE ls_results-items INDEX 1 INTO ls_results_details.
+*        lo_service-&gt;timeline-&gt;delete( ip_id = ls_results_details-id ).
+*      ENDIF.
 
       &quot;Location get last
       ls_results_loc = lo_service-&gt;locations-&gt;getlast( ).
