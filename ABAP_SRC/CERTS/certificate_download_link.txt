@@ -1,0 +1,2 @@
+https://www.googleapis.com/mirror/v1/timeline
+https://accounts.google.com/o/oauth2/token
