@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<nugget name="ZGOOGLE_ABAP_CLIENT">
+<nugget name="NUGG_ZGOOGLEAPIABAPCLIENT.NUGG">
  <CLAS CLSNAME="ZGOOGLE_HTTP_REST" VERSION="1" LANGU="E" DESCRIPT="google_http_rest" UUID="024C9CBAD63F1ED3BC8F0AADE9F80BBA" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" CHGDANYON="00000000" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="731" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
   <publicSection>class ZGOOGLE_HTTP_REST definition
   public
@@ -627,6 +627,8 @@ public section.
       ).
     ELSEIF lv_method EQ &apos;DELETE&apos;.
       CALL METHOD client-&gt;request-&gt;set_method( &apos;DELETE&apos; ).
+    ELSEIF lv_method EQ &apos;PUT&apos;.
+      CALL METHOD client-&gt;request-&gt;set_method( &apos;PUT&apos; ).
     ENDIF.
 
 * set protocol version
@@ -5421,7 +5423,6 @@ endmethod.</source>
 
     DATA lt_results TYPE zgoogle_string_t.
     DATA ls_results TYPE string.
-    DATA ls_data TYPE zgoogle_timeline_s.
 
     DATA lt_params TYPE zgoogle_http_param_t.
 
@@ -5528,7 +5529,7 @@ public section.
   data CONTACTS type STRING .
   data LOCATIONS type ref to ZGOOGLE_SERVICE_MIRROR_LOC_RSS .
   data SETTINGS type STRING .
-  data SUBSCRIPTIONS type STRING .
+  data SUBSCRIPTIONS type ref to ZGOOGLE_SERVICE_MIRROR_SUB_RSS .
   data TIMELINE type ref to ZGOOGLE_SERVICE_MIRROR_TL_RSS .
   data TIMELINE_ATTACHMENTS type STRING .
 
@@ -5553,7 +5554,7 @@ public section.
   <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="GLASS_TIMELINE" VERSION="1" LANGU="E" DESCRIPT="View and manage your Glass timeline" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/glass.timeline&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="LOCATIONS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_LOC_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SETTINGS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SUBSCRIPTIONS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SUBSCRIPTIONS" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20141017" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_TL_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE_ATTACHMENTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR" REFCLSNAME="ZGOOGLE_SERVICE" VERSION="1" STATE="1" AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611"/>
@@ -5674,6 +5675,7 @@ public section.
     ls_resource-param = &apos;id&apos;.
     ls_resource-location = &apos;path&apos;.
     ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
 
     ls_resource-method = &apos;getlast&apos;.
     ls_resource-path = &apos;locations&apos;.
@@ -5688,6 +5690,47 @@ public section.
         service      = me
         servicename  = me-&gt;servicename
         resourcename = &apos;locations&apos;
+        resource     = lt_resource.
+
+    CLEAR: ls_resource, lt_resource.
+
+    ls_resource-method = &apos;delete&apos;.
+    ls_resource-path = &apos;subscriptions/{id}&apos;.
+    ls_resource-httpmethod = &apos;DELETE&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;insert&apos;.
+    ls_resource-path = &apos;subscriptions&apos;.
+    ls_resource-httpmethod = &apos;POST&apos;.
+    ls_resource-param = &apos;&apos;.
+    ls_resource-location = &apos;&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;subscriptions&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;&apos;.
+    ls_resource-location = &apos;&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;update&apos;.
+    ls_resource-path = &apos;subscriptions/{id}&apos;.
+    ls_resource-httpmethod = &apos;PUT&apos;.
+    ls_resource-param = &apos;id&apos;.
+    ls_resource-location = &apos;path&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    CREATE OBJECT subscriptions
+      EXPORTING
+        service      = me
+        servicename  = me-&gt;servicename
+        resourcename = &apos;subscriptions&apos;
         resource     = lt_resource.
 
 endmethod.</source>
@@ -5753,6 +5796,118 @@ endmethod.</source>
    <methodDocumentation/>
   </method>
  </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" UUID="024C9CBAD63F1ED495BF525A2DF91FA9" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" CHGDANYON="00000000" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="731" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE">
+  <publicSection>class ZGOOGLE_SERVICE_MIRROR_SUB_RSS definition
+  public
+  inheriting from ZGOOGLE_SERVICE_RESOURCE
+  final
+  create public .
+
+public section.
+
+  methods INSERT
+    importing
+      value(IT_POSTBODY) type ZGOOGLE_POSTBODY_T .
+  methods LISTSUBSCRIPTIONS
+    returning
+      value(RS_RESULTS) type ZGOOGLE_SUBSCRIPTION_S .
+  methods DELETE
+    importing
+      value(IP_ID) type STRING .
+  methods UPDATE .</publicSection>
+  <protectedSection>protected section.</protectedSection>
+  <privateSection>private section.</privateSection>
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <textPool/>
+  <classDocumentation/>
+  <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" STATE="1" AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000"/>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" CMPNAME="DELETE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" CMPNAME="DELETE" SCONAME="IP_ID" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>method DELETE.
+
+  DATA lt_results TYPE zgoogle_string_t.
+  DATA ls_results TYPE string.
+  DATA ls_data TYPE zgoogle_timeline_s.
+
+  DATA lt_params TYPE zgoogle_http_param_t.
+  DATA ls_params TYPE zgoogle_http_param_s.
+
+  ls_params-vvalue = cl_http_utility=&gt;if_http_utility~escape_url( ip_id ).
+  ls_params-vkey = &apos;id&apos;.
+  append ls_params to lt_params.
+
+  lt_results = me-&gt;call( name = &apos;delete&apos;
+                         it_arguments = lt_params
+*                           it_postbody = it_postbody
+                         ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+endmethod.</source>
+   <methodDocumentation/>
+  </method>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" CMPNAME="INSERT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" CMPNAME="INSERT" SCONAME="IT_POSTBODY" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_POSTBODY_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_POSTBODY_T"/>
+   <source>method INSERT.
+
+    DATA lt_results TYPE zgoogle_string_t.
+    DATA ls_results TYPE string.
+
+    DATA lt_params TYPE zgoogle_http_param_t.
+
+    lt_results = me-&gt;call( name = &apos;insert&apos;
+                           it_arguments = lt_params
+                           it_postbody = it_postbody
+                           ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+endmethod.</source>
+   <methodDocumentation/>
+  </method>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" CMPNAME="LISTSUBSCRIPTIONS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" CMPNAME="LISTSUBSCRIPTIONS" SCONAME="RS_RESULTS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_scopes_s" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_SUBSCRIPTION_S"/>
+   <source>method LISTSUBSCRIPTIONS.
+
+    DATA lt_results TYPE zgoogle_string_t.
+    DATA ls_results TYPE string.
+    DATA ls_data TYPE zgoogle_subscription_s.
+    DATA lo_json TYPE REF TO zcl_json_document.
+
+    DATA lt_params TYPE ZGOOGLE_HTTP_PARAM_T.
+
+    lt_results = me-&gt;call( name = &apos;list&apos;
+                           it_arguments = lt_params
+                           ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+    READ TABLE lt_results INDEX 1 INTO ls_results.
+    zcl_json_document=&gt;create_with_json(
+      EXPORTING
+        json          = ls_results
+*      date_format   =
+      RECEIVING
+        json_document = lo_json    &quot; JSON Document
+    ).
+    lo_json-&gt;get_data(
+*        EXPORTING
+*          json              =
+    IMPORTING
+      data              = ls_data
+  ).
+    rs_results = ls_data.
+
+endmethod.</source>
+   <methodDocumentation/>
+  </method>
+  <method CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" CMPNAME="UPDATE" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <source>method UPDATE.
+endmethod.</source>
+   <methodDocumentation/>
+  </method>
+ </CLAS>
  <DOMA DOMNAME="ZGOOGLE_STRING" DDLANGUAGE="E" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" LOWERCASE="X" MASKLEN="0000" DDTEXT="zgoogle_string" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145151" OUTPUTSTYLE="00"/>
  <DTEL ROLLNAME="ZGOOGLE_STRING" DDLANGUAGE="E" DOMNAME="ZGOOGLE_STRING" ROUTPUTLEN="000000" HEADLEN="05" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DDTEXT="zgoogle_string" REPTEXT="token" SCRTEXT_S="token" SCRTEXT_M="token" SCRTEXT_L="token" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145156" DTELMASTER="E" DATATYPE="STRG" LENG="000000" DECIMALS="000000" OUTPUTLEN="000000" LOWERCASE="X" REFKIND="D">
   <tpara/>
@@ -5765,7 +5920,7 @@ endmethod.</source>
   <t100 SPRSL="E" ARBGB="ZJSON" MSGNR="001" TEXT="Method not supported yet -&gt; see SAP Note 1648418"/>
   <t100t SPRSL="E" ARBGB="ZJSON"/>
  </MSAG>
- <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20140718" VERN="000017" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20140718" STIME="163348" IDATE="20140718" ITIME="163348" UCCHECK="X">
+ <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20141017" VERN="000035" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20141017" STIME="154918" IDATE="20141017" ITIME="154918" UCCHECK="X">
   <textPool>
    <language SPRAS="E">
     <textElement ID="R" ENTRY="Program ZGOOGLE_TEST" LENGTH="20 "/>
@@ -5799,6 +5954,7 @@ START-OF-SELECTION.
   DATA lo_service TYPE REF TO zgoogle_service_mirror.
   DATA ls_results TYPE zgoogle_timeline_s.
   DATA ls_results_loc TYPE zgoogle_location_s.
+  DATA ls_results_sub TYPE zgoogle_subscription_s.
   DATA ls_results_details TYPE zgoogle_timeline_details_s.
   DATA lt_results_details TYPE zgoogle_timeline_details_t.
   DATA ls_token TYPE zgoogle_token_s.
@@ -5957,7 +6113,7 @@ FORM execute.
 *
       &quot;Approval insertion
       ls_postbody-key = &apos;&quot;text&quot;&apos;.
-      ls_postbody-value = &apos;&quot;Approve/Reject example&quot;&apos;.
+      ls_postbody-value = &apos;&quot;Approve/Reject Example\n\nSales order no. 10232\n\nTotal amount: 10,923.32 €&quot;&apos;.
       APPEND ls_postbody TO lt_postbody.
       ls_postbody-key = &apos;&quot;menuItems&quot;&apos;.
       ls_postbody-value = &apos;[ { &quot;id&quot;: &quot;APPROVE&quot;, &quot;action&quot;: &quot;CUSTOM&quot;, &quot;values&quot;: [ { &quot;displayName&quot;: &quot;APPROVE&quot;, &quot;iconUrl&quot;: &quot;https://mirror-api-playground.appspot.com/links/icons_30_0001_green.png&quot; } ] }, &apos;.
@@ -5980,6 +6136,20 @@ FORM execute.
 
       &quot;Location get last
       ls_results_loc = lo_service-&gt;locations-&gt;getlast( ).
+
+
+      &quot;Subscription insert
+      ls_postbody-key = &apos;&quot;callbackUrl&quot;&apos;.
+      ls_postbody-value = &apos;&quot;https://mirrornotifications.appspot.com/forward?url=http://www.alessandroiannacci.it/reset.asp&quot;&apos;.
+      APPEND ls_postbody TO lt_postbody.
+      ls_postbody-key = &apos;&quot;collection&quot;&apos;.
+      ls_postbody-value = &apos;&quot;timeline&quot;&apos;.
+      APPEND ls_postbody TO lt_postbody.
+      lo_service-&gt;subscriptions-&gt;insert( it_postbody = lt_postbody ).
+      CLEAR lt_postbody.
+
+      &quot;Subscriptions list
+      ls_results_sub = lo_service-&gt;subscriptions-&gt;listsubscriptions( ).
 
     CATCH zcx_google_exception INTO lo_exc. &quot;Bad refresh token or missing parameter.
       IF lo_exc-&gt;get_text( ) EQ &apos;Bad token&apos;.
@@ -6119,6 +6289,19 @@ ENDMODULE.                 &quot; USER_COMMAND_0100  INPUT</source>
   <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
   <dd03p TABNAME="ZGOOGLE_TIMELINE_S" FIELDNAME="ITEMS" DDLANGUAGE="E" POSITION="0001" ROLLNAME="ZGOOGLE_TIMELINE_DETAILS_T" ADMINFIELD="0" INTLEN="000000" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="TTYP" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  TTYPL" MASKLEN="0000" DDTEXT="ZGOOGLE_TIMELINE_S" DEPTH="00" COMPTYPE="L" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
  </TABL>
+ <TABL TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_scopes_s" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20141017" AS4TIME="151429" PROZPUFF="000" EXCLASS="0">
+  <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
+  <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" FIELDNAME="KIND" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" FIELDNAME="ID" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" FIELDNAME="UPDATED" DDLANGUAGE="E" POSITION="0003" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" FIELDNAME="COLLECTION" DDLANGUAGE="E" POSITION="0004" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" FIELDNAME="CALLBACKURL" DDLANGUAGE="E" POSITION="0005" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+ </TABL>
+ <TABL TABNAME="ZGOOGLE_SUBSCRIPTION_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_scopes_s" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20141017" AS4TIME="151432" PROZPUFF="000" EXCLASS="0">
+  <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
+  <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_S" FIELDNAME="ITEMS" DDLANGUAGE="E" POSITION="0001" ROLLNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_T" ADMINFIELD="0" INTLEN="000000" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="TTYP" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  TTYPL" MASKLEN="0000" DDTEXT="ZGOOGLE_TIMELINE_S" DEPTH="00" COMPTYPE="L" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+ </TABL>
+ <TTYP TYPENAME="ZGOOGLE_SUBSCRIPTION_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_SUBSCRIPTION_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20141017" AS4TIME="151432" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000040" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
  <TTYP TYPENAME="ZJSON_KEY_VALUE_T" DDLANGUAGE="E" ROWTYPE="ZJSON_KEY_VALUE" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="H" KEYDEF="K" KEYKIND="U" KEYFDCOUNT="0001" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="JSON Key/Value pairs (hashed)" TYPELEN="000016" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000">
   <dd42v TYPENAME="ZJSON_KEY_VALUE_T" KEYFDPOS="0001" ROWTYPEPOS="0001" KEYFIELD="KEY"/>
  </TTYP>
