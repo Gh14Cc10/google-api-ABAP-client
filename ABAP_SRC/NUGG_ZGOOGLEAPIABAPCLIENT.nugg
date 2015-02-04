@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<nugget name="NUGG_ZGOOGLEAPIABAPCLIENT.NUGG">
+<nugget name="NUGG_ZGOOGLEAPIABAPCLIENT">
  <CLAS CLSNAME="ZGOOGLE_HTTP_REST" VERSION="1" LANGU="E" DESCRIPT="google_http_rest" UUID="024C9CBAD63F1ED3BC8F0AADE9F80BBA" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" CHGDANYON="00000000" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="731" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 ">
   <publicSection>class ZGOOGLE_HTTP_REST definition
   public
@@ -5548,15 +5548,15 @@ public section.
 *&quot;* in the implementation part of the class</localMacros>
   <textPool/>
   <classDocumentation/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="ACCOUNTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONTACTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="ACCOUNTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20150204" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONTACTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20150204" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="GLASS_LOCATION" VERSION="1" LANGU="E" DESCRIPT="View your location" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/glass.location&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="GLASS_TIMELINE" VERSION="1" LANGU="E" DESCRIPT="View and manage your Glass timeline" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/glass.timeline&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="LOCATIONS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_LOC_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SETTINGS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SUBSCRIPTIONS" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20141017" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_TL_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
-  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE_ATTACHMENTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="LOCATIONS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20150204" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_LOC_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SETTINGS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20150204" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="SUBSCRIPTIONS" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20150204" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20150204" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_MIRROR_TL_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="TIMELINE_ATTACHMENTS" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="9 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20150204" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
   <inheritance CLSNAME="ZGOOGLE_SERVICE_MIRROR" REFCLSNAME="ZGOOGLE_SERVICE" VERSION="1" STATE="1" AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611"/>
   <method CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" MTDTYPE="2" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
    <parameter CLSNAME="ZGOOGLE_SERVICE_MIRROR" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20140610" CHANGEDBY="IANNACCI" CHANGEDON="20140611" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
@@ -5796,6 +5796,224 @@ endmethod.</source>
    <methodDocumentation/>
   </method>
  </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" UUID="024C9CBAD63F1ED4AB8B3D73AEE952A9" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" CHGDANYON="00000000" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="731" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE">
+  <publicSection>class ZGOOGLE_SERVICE_URLSHR_URL_RSS definition
+  public
+  inheriting from ZGOOGLE_SERVICE_RESOURCE
+  create public .
+
+public section.
+
+  methods LISTURL
+    returning
+      value(RS_RESULTS) type ZGOOGLE_URLSHORTENER_S .
+  methods INSERT
+    importing
+      value(IT_POSTBODY) type ZGOOGLE_POSTBODY_T
+    returning
+      value(RS_RESULTS) type ZGOOGLE_URLSHRT_DETAILS_S .
+  methods GET
+    importing
+      value(IP_SHORTURL) type STRING .</publicSection>
+  <protectedSection>protected section.</protectedSection>
+  <privateSection>private section.</privateSection>
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <textPool/>
+  <classDocumentation/>
+  <inheritance CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE" VERSION="1" STATE="1" AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000"/>
+  <method CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" CMPNAME="GET" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="3 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" CMPNAME="GET" SCONAME="IP_SHORTURL" VERSION="1" LANGU="E" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="STRING"/>
+   <source>METHOD get.
+
+  DATA lt_results TYPE zgoogle_string_t.
+  DATA ls_results TYPE string.
+  DATA ls_data TYPE zgoogle_timeline_s.
+
+  DATA lt_params TYPE zgoogle_http_param_t.
+  DATA ls_params TYPE zgoogle_http_param_s.
+
+  ls_params-vvalue = cl_http_utility=&gt;if_http_utility~escape_url( ip_shorturl ).
+  ls_params-vkey = &apos;shortUrl&apos;.
+  APPEND ls_params TO lt_params.
+
+  lt_results = me-&gt;call( name = &apos;get&apos;
+                         it_arguments = lt_params
+*                           it_postbody = it_postbody
+                         ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+ENDMETHOD.</source>
+   <methodDocumentation/>
+  </method>
+  <method CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" CMPNAME="INSERT" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="2 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" CMPNAME="INSERT" SCONAME="IT_POSTBODY" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_POSTBODY_T" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_POSTBODY_T"/>
+   <parameter CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" CMPNAME="INSERT" SCONAME="RS_RESULTS" VERSION="1" LANGU="E" DESCRIPT="zgoogle_scopes_s" CMPTYPE="1" MTDTYPE="0" EDITORDER="2 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDBY="IANNACCI" CHANGEDON="20150204" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_URLSHRT_DETAILS_S"/>
+   <source>METHOD insert.
+
+  DATA lt_results TYPE zgoogle_string_t.
+  DATA ls_results TYPE string.
+  DATA lo_json TYPE REF TO zcl_json_document.
+  DATA ls_data TYPE zgoogle_urlshrt_details_s.
+  DATA lt_params TYPE zgoogle_http_param_t.
+
+  lt_results = me-&gt;call( name = &apos;insert&apos;
+                         it_arguments = lt_params
+                         it_postbody = it_postbody
+                         ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+  READ TABLE lt_results INDEX 1 INTO ls_results.
+  zcl_json_document=&gt;create_with_json(
+    EXPORTING
+      json          = ls_results
+*      date_format   =
+    RECEIVING
+      json_document = lo_json    &quot; JSON Document
+  ).
+  lo_json-&gt;get_data(
+*        EXPORTING
+*          json              =
+  IMPORTING
+    data              = ls_data
+).
+  rs_results = ls_data.
+
+ENDMETHOD.</source>
+   <methodDocumentation/>
+  </method>
+  <method CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" CMPNAME="LISTURL" VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" MTDTYPE="0" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_URLSHR_URL_RSS" CMPNAME="LISTURL" SCONAME="RS_RESULTS" VERSION="1" LANGU="E" DESCRIPT="String table" CMPTYPE="1" MTDTYPE="0" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDBY="IANNACCI" CHANGEDON="20150204" PARDECLTYP="3" PARPASSTYP="0" TYPTYPE="1" TYPE="ZGOOGLE_URLSHORTENER_S"/>
+   <source>method LISTURL.
+
+    DATA lt_results TYPE zgoogle_string_t.
+    DATA ls_results TYPE string.
+    DATA ls_data TYPE zgoogle_urlshortener_s.
+    DATA lo_json TYPE REF TO zcl_json_document.
+
+    DATA lt_params TYPE ZGOOGLE_HTTP_PARAM_T.
+
+    lt_results = me-&gt;call( name = &apos;list&apos;
+                           it_arguments = lt_params
+                           ip_content_type = zgoogle_io_generic=&gt;c_ctype_json ).
+
+    READ TABLE lt_results INDEX 1 INTO ls_results.
+    zcl_json_document=&gt;create_with_json(
+      EXPORTING
+        json          = ls_results
+*      date_format   =
+      RECEIVING
+        json_document = lo_json    &quot; JSON Document
+    ).
+    lo_json-&gt;get_data(
+*        EXPORTING
+*          json              =
+    IMPORTING
+      data              = ls_data
+  ).
+    rs_results = ls_data.
+
+endmethod.</source>
+   <methodDocumentation/>
+  </method>
+ </CLAS>
+ <CLAS CLSNAME="ZGOOGLE_SERVICE_URLSHORTENER" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror" UUID="024C9CBAD63F1ED4AB8AEB7480CD5295" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" CHGDANYON="00000000" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="731" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE">
+  <publicSection>class ZGOOGLE_SERVICE_URLSHORTENER definition
+  public
+  inheriting from ZGOOGLE_SERVICE
+  create public .
+
+public section.
+
+  constants URLSHORTENER type STRING value &apos;https://www.googleapis.com/auth/urlshortener&apos;. &quot;#EC NOTEXT
+  data URL type ref to ZGOOGLE_SERVICE_URLSHR_URL_RSS .
+  constants URL_SHORTENER type STRING value &apos;https://www.googleapis.com/auth/urlshortener&apos;. &quot;#EC NOTEXT
+
+  methods CONSTRUCTOR
+    importing
+      value(IO_CLIENT) type ref to ZGOOGLE_CLIENT .</publicSection>
+  <protectedSection>protected section.</protectedSection>
+  <privateSection>private section.</privateSection>
+  <localImplementation>*&quot;* use this source file for the definition and implementation of
+*&quot;* local helper classes, interface definitions and type
+*&quot;* declarations</localImplementation>
+  <localTypes>*&quot;* use this source file for any type of declarations (class
+*&quot;* definitions, interfaces or type declarations) you need for
+*&quot;* components in the private section</localTypes>
+  <localMacros>*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</localMacros>
+  <textPool/>
+  <classDocumentation/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_URLSHORTENER" CMPNAME="URL" VERSION="1" LANGU="E" DESCRIPT="zgoogle_service_mirror_tl_rss" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" ATTDECLTYP="0" ATTEXPVIRT="0" TYPTYPE="3" TYPE="ZGOOGLE_SERVICE_URLSHR_URL_RSS" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_URLSHORTENER" CMPNAME="URLSHORTENER" VERSION="1" LANGU="E" DESCRIPT="Manage your goo.gl short URLs." EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/urlshortener&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <attribute CLSNAME="ZGOOGLE_SERVICE_URLSHORTENER" CMPNAME="URL_SHORTENER" VERSION="1" LANGU="E" DESCRIPT="Google URL Shortener API" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" ATTDECLTYP="2" ATTVALUE="&apos;https://www.googleapis.com/auth/urlshortener&apos;" ATTEXPVIRT="0" TYPTYPE="1" TYPE="STRING" SRCROW1="0 " SRCCOLUMN1="0 " SRCROW2="0 " SRCCOLUMN2="0 " R3RELEASE="731" TYPESRC_LENG="0 "/>
+  <inheritance CLSNAME="ZGOOGLE_SERVICE_URLSHORTENER" REFCLSNAME="ZGOOGLE_SERVICE" VERSION="1" STATE="1" AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000"/>
+  <method CLSNAME="ZGOOGLE_SERVICE_URLSHORTENER" CMPNAME="CONSTRUCTOR" VERSION="1" LANGU="E" DESCRIPT="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" MTDTYPE="2" MTDDECLTYP="0" R3RELEASE="731" BCMTDCAT="00" BCMTDSYN="0">
+   <parameter CLSNAME="ZGOOGLE_SERVICE_URLSHORTENER" CMPNAME="CONSTRUCTOR" SCONAME="IO_CLIENT" VERSION="1" LANGU="E" DESCRIPT="zgoogle_client" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " DISPID="0 " AUTHOR="IANNACCI" CREATEDON="20150204" CHANGEDON="00000000" PARDECLTYP="0" PARPASSTYP="0" TYPTYPE="3" TYPE="ZGOOGLE_CLIENT"/>
+   <source>method CONSTRUCTOR.
+
+    super-&gt;constructor( io_client ).
+    me-&gt;servicepath = &apos;urlshortener/v1/&apos;.
+    me-&gt;version = &apos;v1&apos;.
+    me-&gt;servicename = &apos;urlshortener&apos;.
+
+    DATA ls_resource TYPE zgoogle_methods_s.
+    DATA lt_resource TYPE zgoogle_methods_t.
+
+    ls_resource-method = &apos;get&apos;.
+    ls_resource-path = &apos;url&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;shortUrl&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-required = &apos;X&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;get&apos;.
+    ls_resource-path = &apos;url&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;projection&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;insert&apos;.
+    ls_resource-path = &apos;url&apos;.
+    ls_resource-httpmethod = &apos;POST&apos;.
+    ls_resource-param = &apos;&apos;.
+    ls_resource-location = &apos;&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;url/history&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;start-token&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+    ls_resource-method = &apos;list&apos;.
+    ls_resource-path = &apos;url/history&apos;.
+    ls_resource-httpmethod = &apos;GET&apos;.
+    ls_resource-param = &apos;projection&apos;.
+    ls_resource-location = &apos;query&apos;.
+    ls_resource-required = &apos;&apos;.
+    APPEND ls_resource TO lt_resource.
+
+    CREATE OBJECT url
+      EXPORTING
+        service      = me
+        servicename  = me-&gt;servicename
+        resourcename = &apos;url&apos;
+        resource     = lt_resource.
+
+
+endmethod.</source>
+   <methodDocumentation/>
+  </method>
+ </CLAS>
  <CLAS CLSNAME="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" VERSION="1" LANGU="E" DESCRIPT="ZGOOGLE_SERVICE_MIRROR_SUB_RSS" UUID="024C9CBAD63F1ED495BF525A2DF91FA9" CATEGORY="00" EXPOSURE="2" STATE="1" RELEASE="0" AUTHOR="IANNACCI" CREATEDON="20141017" CHANGEDON="00000000" CHGDANYON="00000000" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="731" CLSBCCAT="00" DURATION_TYPE="0 " RISK_LEVEL="0 " REFCLSNAME="ZGOOGLE_SERVICE_RESOURCE">
   <publicSection>class ZGOOGLE_SERVICE_MIRROR_SUB_RSS definition
   public
@@ -5909,10 +6127,10 @@ endmethod.</source>
   </method>
  </CLAS>
  <DOMA DOMNAME="ZGOOGLE_STRING" DDLANGUAGE="E" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" LOWERCASE="X" MASKLEN="0000" DDTEXT="zgoogle_string" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145151" OUTPUTSTYLE="00"/>
- <DTEL ROLLNAME="ZGOOGLE_STRING" DDLANGUAGE="E" DOMNAME="ZGOOGLE_STRING" ROUTPUTLEN="000000" HEADLEN="05" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DDTEXT="zgoogle_string" REPTEXT="token" SCRTEXT_S="token" SCRTEXT_M="token" SCRTEXT_L="token" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145156" DTELMASTER="E" DATATYPE="STRG" LENG="000000" DECIMALS="000000" OUTPUTLEN="000000" LOWERCASE="X" REFKIND="D">
+ <DTEL ROLLNAME="ZGOOGLE_BOOL" DDLANGUAGE="E" ROUTPUTLEN="000000" HEADLEN="07" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DDTEXT="Boolean" REPTEXT="Boolean" SCRTEXT_S="Boolean" SCRTEXT_M="Boolean" SCRTEXT_L="Boolean" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145154" DTELMASTER="E" DATATYPE="CHAR" LENG="000001" DECIMALS="000000" OUTPUTLEN="000001">
   <tpara/>
  </DTEL>
- <DTEL ROLLNAME="ZGOOGLE_BOOL" DDLANGUAGE="E" ROUTPUTLEN="000000" HEADLEN="07" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DDTEXT="Boolean" REPTEXT="Boolean" SCRTEXT_S="Boolean" SCRTEXT_M="Boolean" SCRTEXT_L="Boolean" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145154" DTELMASTER="E" DATATYPE="CHAR" LENG="000001" DECIMALS="000000" OUTPUTLEN="000001">
+ <DTEL ROLLNAME="ZGOOGLE_STRING" DDLANGUAGE="E" DOMNAME="ZGOOGLE_STRING" ROUTPUTLEN="000000" HEADLEN="05" SCRLEN1="10" SCRLEN2="15" SCRLEN3="20" DDTEXT="zgoogle_string" REPTEXT="token" SCRTEXT_S="token" SCRTEXT_M="token" SCRTEXT_L="token" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145156" DTELMASTER="E" DATATYPE="STRG" LENG="000000" DECIMALS="000000" OUTPUTLEN="000000" LOWERCASE="X" REFKIND="D">
   <tpara/>
  </DTEL>
  <MSAG ARBGB="ZJSON" MASTERLANG="E" RESPUSER="IANNACCI" LASTUSER="IANNACCI" LDATE="20140611" LTIME="145502">
@@ -5920,7 +6138,225 @@ endmethod.</source>
   <t100 SPRSL="E" ARBGB="ZJSON" MSGNR="001" TEXT="Method not supported yet -&gt; see SAP Note 1648418"/>
   <t100t SPRSL="E" ARBGB="ZJSON"/>
  </MSAG>
- <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20141017" VERN="000035" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20141017" STIME="154918" IDATE="20141017" ITIME="154918" UCCHECK="X">
+ <PROG NAME="ZGOOGLE_TEST_URLSHORTENER" VARCL="X" SUBC="1" CNAM="IANNACCI" CDAT="20150204" UNAM="IANNACCI" UDAT="20150204" VERN="000017" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20150204" STIME="124229" IDATE="20150204" ITIME="124229" UCCHECK="X">
+  <textPool>
+   <language SPRAS="E">
+    <textElement ID="R" ENTRY="Program ZGOOGLE_TEST" LENGTH="20 "/>
+   </language>
+  </textPool>
+  <programDocumentation/>
+  <dynpros>
+   <dynpro PROG="ZGOOGLE_TEST_URLSHORTENER" DNUM="0100" FNUM="0000" BZMX="3 " BZBR="119 " MILI="192 " MICO="37 " MALI="0 " MACO="0 " NOLI="27 " NOCO="120 " VALP="0 " CUAN="G" SPRA="E" DGEN="20150204" TGEN="121141" DTEXT="screen">
+    <dynprofield FNAM="LABEL" DIDX="0000" FLG1="00" FLG2="00" FLG3="00" FMB1="30" FMB2="00" LENG="04" LINE="03" COLN="04" LANF="00" LBLK="00" LREP="00" TYPE="CHAR" ITYP="0" AGLT="00" ADEZ="00" STXT="Code" RES1="                                                                                                                                                                                                                                                        X"/>
+    <dynprofield FNAM="LV_XCHAGETOKEN" DIDX="006D" FLG1="81" FLG2="02" FLG3="80" FMB1="00" FMB2="00" LENG="FF" LINE="03" COLN="0C" LANF="00" LBLK="00" LREP="00" TYPE="STRG" ITYP="g" AGLT="00" ADEZ="00" STXT="____________________________________________________________________________________________________________________________________"/>
+    <dynprofield DIDX="0000" FLG1="80" FLG2="10" FLG3="00" FMB1="00" FMB2="00" LENG="14" LINE="FF" COLN="01" LTYP="O" LANF="00" LBLK="00" LREP="00" TYPE="CHAR" AGLT="00" ADEZ="00" STXT="____________________"/>
+    <dynproflowsource>PROCESS BEFORE OUTPUT.
+* MODULE STATUS_0100.
+*
+PROCESS AFTER INPUT.
+ MODULE USER_COMMAND_0100.</dynproflowsource>
+   </dynpro>
+  </dynpros>
+  <source>*&amp;---------------------------------------------------------------------*
+*&amp; Report  ZGOOGLE_TEST
+*&amp;
+*&amp;---------------------------------------------------------------------*
+*&amp;
+*&amp;
+*&amp;---------------------------------------------------------------------*
+REPORT zgoogle_test_urlshortener.
+
+START-OF-SELECTION.
+
+  DATA lo_client TYPE REF TO zgoogle_client.
+  DATA lo_service TYPE REF TO zgoogle_service_urlshortener.
+  DATA ls_results TYPE zgoogle_urlshortener_s.
+  DATA ls_results_details TYPE zgoogle_urlshrt_details_s.
+  DATA lt_results_details TYPE zgoogle_urlshrt_details_t.
+  DATA ls_token TYPE zgoogle_token_s.
+  DATA lv_xchagetoken TYPE string.
+  DATA lv_client_id TYPE string VALUE &apos;422143070437-51u1p3kaet97s88noehdvrmb4cbg3tb3.apps.googleusercontent.com&apos;.
+  DATA lv_client_secret TYPE string VALUE &apos;qyXSsqa4XdteFK9u4Xu-RZoT&apos;.
+  DATA lv_redirect_uri TYPE string VALUE &apos;urn:ietf:wg:oauth:2.0:oob&apos;.
+  DATA ls_access TYPE zgoogle_access.
+  DATA lv_urlc TYPE c LENGTH 2200.
+  DATA lv_url TYPE string.
+  DATA lo_json TYPE REF TO zcl_json_document.
+  TYPES: BEGIN OF s_data,
+            items TYPE string,
+        END OF s_data.
+  DATA ls_data TYPE s_data.
+  DATA lt_strings TYPE zgoogle_string_t.
+  DATA ls_strings TYPE string.
+  DATA lv_token TYPE zgoogle_token_s.
+
+  CREATE OBJECT lo_client.
+
+  lo_client-&gt;setclientid( lv_client_id ).
+  lo_client-&gt;setclientsecret( lv_client_secret ).
+  lo_client-&gt;setredirecturi( lv_redirect_uri ).
+
+  lo_client-&gt;set_proxy( &apos;squid.techedge.corp&apos; ).
+  lo_client-&gt;set_proxy_port( &apos;3128&apos; ).
+
+*  lo_client-&gt;set_proxy( &apos;10.3.1.155&apos; ).
+*  lo_client-&gt;set_proxy_port( &apos;8080&apos; ).
+
+  lo_client-&gt;addscope( zgoogle_service_urlshortener=&gt;url_shortener ).
+
+  CREATE OBJECT lo_service
+    EXPORTING
+      io_client = lo_client.
+
+* Retrieve stored access token
+  SELECT SINGLE * FROM zgoogle_access INTO ls_access WHERE username = sy-uname.
+
+  PERFORM authorize. &quot;If the access token is provided this step will be jumped
+
+  CALL METHOD lo_client-&gt;getaccesstoken
+    RECEIVING
+      rs_token = lv_token.
+
+*  IF lo_client-&gt;getaccesstoken( )-value IS NOT INITIAL.
+  IF lv_token-value IS NOT INITIAL.
+*AUTHENTICATED
+    PERFORM execute. &quot;If needed the execution of the services perform refresh token
+  ENDIF.
+
+
+*&amp;---------------------------------------------------------------------*
+*&amp;      FORM authorize.
+*&amp;---------------------------------------------------------------------*
+*       Execute user authorization retrieving exchange token and then
+*       perform authentication
+*----------------------------------------------------------------------*
+FORM authorize.
+
+  CALL METHOD lo_client-&gt;getaccesstoken
+    RECEIVING
+      rs_token = lv_token.
+
+*  WHILE lo_client-&gt;getaccesstoken( )-value IS INITIAL.
+  WHILE lv_token-value IS INITIAL.
+    PERFORM authenticate.
+
+    CALL METHOD lo_client-&gt;getaccesstoken
+      RECEIVING
+        rs_token = lv_token.
+
+*    IF lo_client-&gt;getaccesstoken( )-value IS INITIAL.
+    IF lv_token-value IS INITIAL.
+*  if the token is not set, go to this link for the authentication:
+      lv_url = lo_client-&gt;createauthurl( ).
+      lv_urlc = lv_url.
+      CALL FUNCTION &apos;CALL_BROWSER&apos;
+        EXPORTING
+          url = lv_urlc.
+      CALL SCREEN 100.
+    ENDIF.
+
+  ENDWHILE.
+ENDFORM.                    &quot;authorize
+
+*&amp;---------------------------------------------------------------------*
+*&amp;      FORM authenticate.
+*&amp;---------------------------------------------------------------------*
+*       Execute authentication using the exchange token given by authorization
+*       or using the stored access token
+*----------------------------------------------------------------------*
+FORM authenticate.
+
+  IF ls_access-access_token IS INITIAL.
+    IF lv_xchagetoken IS NOT INITIAL.
+*      ls_token = lo_client-&gt;authenticate( ip_code = lv_xchagetoken ).
+      CALL METHOD lo_client-&gt;authenticate
+        EXPORTING
+          ip_code   = lv_xchagetoken
+*         is_access =
+        RECEIVING
+          rs_auth   = ls_token.
+
+    ENDIF.
+  ELSE.
+    lo_client-&gt;authenticate( is_access = ls_access ).
+  ENDIF.
+
+ENDFORM.                    &quot;authenticate
+
+*&amp;---------------------------------------------------------------------*
+*&amp;      FORM execute.
+*&amp;---------------------------------------------------------------------*
+*       Execute one insert and list all the items in the current
+*       user table for the current application
+*----------------------------------------------------------------------*
+FORM execute.
+  &quot;Call the service
+  DATA lo_exc TYPE REF TO zcx_google_exception.
+  DATA lt_postbody TYPE zgoogle_postbody_t.
+  DATA ls_postbody TYPE zgoogle_postbody_s.
+*  DATA lt_params TYPE zgoogle_http_param_t.
+
+  TRY.
+*
+      &quot;URL insertion
+      ls_postbody-key = &apos;&quot;longUrl&quot;&apos;.
+      ls_postbody-value = &apos;&quot;www.alessandroiannacci.it&quot;&apos;.
+      APPEND ls_postbody TO lt_postbody.
+      ls_results_details = lo_service-&gt;url-&gt;insert(
+          it_postbody = lt_postbody    &quot; ZGOOGLE_POSTBODY_T
+      ).
+      CLEAR lt_postbody.
+
+      &quot;List
+      ls_results = lo_service-&gt;url-&gt;listurl( ).
+
+    CATCH zcx_google_exception INTO lo_exc. &quot;Bad refresh token or missing parameter.
+      IF lo_exc-&gt;get_text( ) EQ &apos;Bad token&apos;.
+        PERFORM authorize.
+      ELSE.
+        WRITE: / &apos;Missing parameter&apos;.
+      ENDIF.
+  ENDTRY.
+
+  &quot;Store token info (after the service call because the token can be refreshed)
+  CALL METHOD lo_client-&gt;getaccesstoken
+    RECEIVING
+      rs_token = lv_token.
+*  ls_access-access_token = lo_client-&gt;getaccesstoken( )-value.
+*  ls_access-expires_in = lo_client-&gt;getaccesstoken( )-expires_in.
+*  ls_access-refresh_token = lo_client-&gt;getaccesstoken( )-refresh_token.
+*  ls_access-created = lo_client-&gt;getaccesstoken( )-created.
+*  ls_access-data = lo_client-&gt;getaccesstoken( )-data.
+  ls_access-access_token = lv_token-value.
+  ls_access-expires_in = lv_token-expires_in.
+  ls_access-refresh_token = lv_token-refresh_token.
+  ls_access-created = lv_token-created.
+  ls_access-data = lv_token-data.
+  ls_access-username = sy-uname.
+  MODIFY zgoogle_access FROM ls_access.
+
+  &quot;Print results
+  MOVE ls_results-items TO lt_results_details.
+  WRITE: &apos;URLS ITEMS FOR USER &apos;, sy-uname, &apos;:&apos;.
+  WRITE /.
+  LOOP AT lt_results_details INTO ls_results_details.
+    IF ls_results_details-longurl IS NOT INITIAL.
+      WRITE: / sy-tabix, &apos;. - &apos;, ls_results_details-longurl.
+      WRITE: / sy-tabix, &apos;. - &apos;, ls_results_details-id.
+    ENDIF.
+  ENDLOOP.
+ENDFORM.                    &quot;execute
+
+*&amp;---------------------------------------------------------------------*
+*&amp;      Module  USER_COMMAND_0100  INPUT
+*&amp;---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_0100 INPUT.
+
+ENDMODULE.                 &quot; USER_COMMAND_0100  INPUT</source>
+ </PROG>
+ <PROG NAME="ZGOOGLE_TEST" VARCL="X" SUBC="1" CDAT="00000000" UNAM="IANNACCI" UDAT="20150108" VERN="000037" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20150204" STIME="120530" IDATE="20150108" ITIME="111031" UCCHECK="X">
   <textPool>
    <language SPRAS="E">
     <textElement ID="R" ENTRY="Program ZGOOGLE_TEST" LENGTH="20 "/>
@@ -6289,6 +6725,21 @@ ENDMODULE.                 &quot; USER_COMMAND_0100  INPUT</source>
   <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
   <dd03p TABNAME="ZGOOGLE_TIMELINE_S" FIELDNAME="ITEMS" DDLANGUAGE="E" POSITION="0001" ROLLNAME="ZGOOGLE_TIMELINE_DETAILS_T" ADMINFIELD="0" INTLEN="000000" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="TTYP" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  TTYPL" MASKLEN="0000" DDTEXT="ZGOOGLE_TIMELINE_S" DEPTH="00" COMPTYPE="L" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
  </TABL>
+ <TABL TABNAME="ZGOOGLE_URLSHORTENER_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_scopes_s" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20150204" AS4TIME="122645" PROZPUFF="000" EXCLASS="0">
+  <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHORTENER_S" FIELDNAME="KIND" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHORTENER_S" FIELDNAME="TOTALITEMS" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHORTENER_S" FIELDNAME="ITEMSPERPAGE" DDLANGUAGE="E" POSITION="0003" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHORTENER_S" FIELDNAME="ITEMS" DDLANGUAGE="E" POSITION="0004" ROLLNAME="ZGOOGLE_URLSHRT_DETAILS_T" ADMINFIELD="0" INTLEN="000000" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="TTYP" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  TTYPL" MASKLEN="0000" DDTEXT="url shortener results for list method" DEPTH="00" COMPTYPE="L" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+ </TABL>
+ <TABL TABNAME="ZGOOGLE_URLSHRT_DETAILS_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="url shortener struct for list method" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20150204" AS4TIME="122525" PROZPUFF="000" EXCLASS="0">
+  <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHRT_DETAILS_S" FIELDNAME="KIND" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHRT_DETAILS_S" FIELDNAME="ID" DDLANGUAGE="E" POSITION="0002" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHRT_DETAILS_S" FIELDNAME="LONGURL" DDLANGUAGE="E" POSITION="0003" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHRT_DETAILS_S" FIELDNAME="STATUS" DDLANGUAGE="E" POSITION="0004" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+  <dd03p TABNAME="ZGOOGLE_URLSHRT_DETAILS_S" FIELDNAME="CREATED" DDLANGUAGE="E" POSITION="0005" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
+ </TABL>
  <TABL TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" DDLANGUAGE="E" TABCLASS="INTTAB" DATMIN="0000000000" DATMAX="0000000000" DATAVG="0000000000" DDTEXT="zgoogle_scopes_s" AUTHCLASS="00" AS4USER="IANNACCI" AS4DATE="20141017" AS4TIME="151429" PROZPUFF="000" EXCLASS="0">
   <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
   <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_S" FIELDNAME="KIND" DDLANGUAGE="E" POSITION="0001" ADMINFIELD="0" INTTYPE="g" INTLEN="000008" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="STRG" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  STRG" MASKLEN="0000" DEPTH="00" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
@@ -6301,18 +6752,20 @@ ENDMODULE.                 &quot; USER_COMMAND_0100  INPUT</source>
   <dd09l AS4VERS="0000" SCHFELDANZ="000" AS4DATE="00000000" AS4TIME="000000"/>
   <dd03p TABNAME="ZGOOGLE_SUBSCRIPTION_S" FIELDNAME="ITEMS" DDLANGUAGE="E" POSITION="0001" ROLLNAME="ZGOOGLE_SUBSCRIPTION_DETAILS_T" ADMINFIELD="0" INTLEN="000000" ROUTPUTLEN="000000" HEADLEN="00" SCRLEN1="00" SCRLEN2="00" SCRLEN3="00" DATATYPE="TTYP" LENG="000000" OUTPUTLEN="000000" DECIMALS="000000" MASK="  TTYPL" MASKLEN="0000" DDTEXT="ZGOOGLE_TIMELINE_S" DEPTH="00" COMPTYPE="L" EXCLASS="0" DBPOSITION="0000" OUTPUTSTYLE="00" STRORLOCPOS="00"/>
  </TABL>
- <TTYP TYPENAME="ZGOOGLE_SUBSCRIPTION_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_SUBSCRIPTION_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20141017" AS4TIME="151432" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000040" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_HTTP_HEADERS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_HTTP_HEADERS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140610" AS4TIME="152615" DDTEXT="ZGOOGLE_HTTP_PARAM_T" TYPELEN="000016" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_SCOPES_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_SCOPES_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_HTTP_PARAM_T" TYPELEN="000008" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_TIMELINE_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_TIMELINE_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145159" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000008" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_POSTBODY_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_POSTBODY_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_POSTBODY_T" TYPELEN="000016" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_TIMELINE_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_TIMELINE_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000072" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_LOCATION_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_LOCATION_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140610" AS4TIME="102707" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000064" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_KCV_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_KCV_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_KCV_T" TYPELEN="000032" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_STRING_T" DDLANGUAGE="E" DATATYPE="STRG" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145156" DDTEXT="String table" TYPELEN="000008" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_METHODS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_METHODS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145159" DDTEXT="ZGOOGLE_METHODS_T" TYPELEN="000044" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_HTTP_PARAM_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_HTTP_PARAM_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_HTTP_PARAM_T" TYPELEN="000024" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
  <TTYP TYPENAME="ZJSON_KEY_VALUE_T" DDLANGUAGE="E" ROWTYPE="ZJSON_KEY_VALUE" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="H" KEYDEF="K" KEYKIND="U" KEYFDCOUNT="0001" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="JSON Key/Value pairs (hashed)" TYPELEN="000016" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000">
   <dd42v TYPENAME="ZJSON_KEY_VALUE_T" KEYFDPOS="0001" ROWTYPEPOS="0001" KEYFIELD="KEY"/>
  </TTYP>
- <TTYP TYPENAME="ZGOOGLE_HTTP_PARAM_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_HTTP_PARAM_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_HTTP_PARAM_T" TYPELEN="000024" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_METHODS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_METHODS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145159" DDTEXT="ZGOOGLE_METHODS_T" TYPELEN="000044" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_STRING_T" DDLANGUAGE="E" DATATYPE="STRG" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145156" DDTEXT="String table" TYPELEN="000008" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_KCV_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_KCV_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_KCV_T" TYPELEN="000032" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_LOCATION_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_LOCATION_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140610" AS4TIME="102707" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000064" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_TIMELINE_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_TIMELINE_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000072" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_POSTBODY_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_POSTBODY_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_POSTBODY_T" TYPELEN="000016" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_TIMELINE_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_TIMELINE_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145159" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000008" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_SCOPES_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_SCOPES_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140611" AS4TIME="145157" DDTEXT="ZGOOGLE_HTTP_PARAM_T" TYPELEN="000008" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
- <TTYP TYPENAME="ZGOOGLE_HTTP_HEADERS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_HTTP_HEADERS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20140610" AS4TIME="152615" DDTEXT="ZGOOGLE_HTTP_PARAM_T" TYPELEN="000016" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_URLSHORTENER_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_URLSHORTENER_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20150204" AS4TIME="122750" DDTEXT="ZGOOGLE_URLSHORTENER_S" TYPELEN="000032" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_SUBSCRIPTION_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_SUBSCRIPTION_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20141017" AS4TIME="151432" DDTEXT="ZGOOGLE_TIMELINE_S" TYPELEN="000040" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
+ <TTYP TYPENAME="ZGOOGLE_URLSHRT_DETAILS_T" DDLANGUAGE="E" ROWTYPE="ZGOOGLE_URLSHRT_DETAILS_S" ROWKIND="S" DATATYPE="STRU" LENG="000000" DECIMALS="000000" ACCESSMODE="T" KEYDEF="D" KEYKIND="N" KEYFDCOUNT="0000" AS4USER="IANNACCI" AS4DATE="20150204" AS4TIME="122644" DDTEXT="url shortener results for list method" TYPELEN="000040" CTLENG="000000" CTDECIMALS="000000" OCCURS="00000"/>
 </nugget>
