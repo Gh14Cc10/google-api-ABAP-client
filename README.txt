@@ -3,7 +3,7 @@ google-api-ABAP-client
 
 Google APIs Client Library for ABAP created as copy of the php Library.
 
-Starting with Google Glasses API.
+Starting with Google Glasses API and Google URL Shortener service.
 
 The google-api-php-client-master is the folder with the php implementation to translate.
 
@@ -24,6 +24,7 @@ ZGOOGLEAPIABAPCLIENT
 |->SUBPACKAGES*
 |
 ->report ZGOOGLE_TEST
+->report ZGOOGLE_TEST_URLSHORTENER
 
 *
 SUBPACKAGES:
@@ -41,14 +42,6 @@ SUBPACKAGES:
    |_(ZOOGLE_IO_GENERIC)
 |
 ->ZSERVICE
-   |_(ZGOOGLE_SERVICE_MIRROR, ZGOOGLE_SERVICE_MIRROR_TL_RSS, ZGOOGLE_SERVICE_MIRROR_LOC_RSS, ZGOOGLE_SERVICE_RESOURCE)
-
-
---------------------------------------
-Next steps for collaborators:
---------------------------------------
-
-- Implement a good user interface for the demo
-- Implement more methods (get, update, etc.)
+   |_(ZGOOGLE_SERVICE_MIRROR, ZGOOGLE_SERVICE_MIRROR_TL_RSS, ZGOOGLE_SERVICE_MIRROR_LOC_RSS, ZGOOGLE_SERVICE_RESOURCE, ZGOOGLE_SERVICE_URLSHORTENER, ZGOOGLE_SERVICE_URLSHR_URL_RSS)
 
 
